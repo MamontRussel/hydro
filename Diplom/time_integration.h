@@ -10,7 +10,7 @@
 // itype-- types of particles
 // 	=1 ideal gas
 // 	=2 water
-// 	= 3 tnt
+// 	=3 tnt
 // hsml-- smoothing lengths of particles
 // ntotal-- total particle number
 // maxtimestep-- maximum timesteps
@@ -20,7 +20,7 @@
 
 void time_integration(double **x, double **vx, double *mass,
   double *rho,double *p,double *u,double *c,double *s,
-  double *e,int *itype,double *hsml,int ntotal,int maxtimestep,double dt )
+  double *e,int *itype,double *hsml,int &ntotal,int &maxtimestep,double &dt )
 {
 
   int itimestep, current_ts=0, nstart=0;

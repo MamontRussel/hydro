@@ -13,10 +13,10 @@
 // dwdx Derivative of kernel with respect to x, y and z [out]
 // countiac Number of neighboring particles [out]
 
-void direct_find(int itimestep, int ntotal, double *hsml, double **x,int niac,int *pair_i,
+void direct_find(int itimestep, int ntotal, double *hsml, double **x,int &niac,int *pair_i,
 	int *pair_j,double *w,double **dwdx,int *countiac)
 {
-	int i, j,sumiac, maxiac, miniac, noiac, maxp, minp, scale_k;
+	int i, j,sumiac, maxiac, miniac, noiac, maxp=0, minp, scale_k;
 	double *dxiac = new double[dim]; 
 	double driac, r, mhsml;
 	double *tdwdx = new double[dim];
@@ -83,8 +83,10 @@ void direct_find(int itimestep, int ntotal, double *hsml, double **x,int niac,in
 			miniac = countiac[i];
 			minp = i;
 		}
-		if (countiac[i]==0) noiac = noiac + 1;
+		if (countiac[i]==0) noiac++;
+		//cout << maxp<<endl;
 	}
+
 	if (itimestep % print_step==0)
 	{
 		if (int_stat)

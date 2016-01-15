@@ -10,7 +10,7 @@
 // dwdx Derivative of kernel with respect to x, y and [in]
 // hsml Smoothing Length [in/out]
 
-void h_upgrade(double dt,int ntotal,double *mass,double **vx,double *rho,int niac,int *pair_i,
+void h_upgrade(double &dt,int ntotal,double *mass,double **vx,double *rho,int &niac,int *pair_i,
 	int *pair_j,double **dwdx,double *hsml)
 {
 	int i, j;

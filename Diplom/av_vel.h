@@ -10,7 +10,7 @@
 // rho : Density of each particle [in]
 // av : Average velocityof each particle [out]
 
-void av_vel(int ntotal,double *mass,int niac,int *pair_i,int *pair_j,double *w,double **vx,
+void av_vel(int ntotal,double *mass,int &niac,int *pair_i,int *pair_j,double *w,double **vx,
   double *rho,double **av)
 {
 	int i,j;

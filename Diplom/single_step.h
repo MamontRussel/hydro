@@ -34,7 +34,7 @@
 #include "hsml.h"
 #include "direct_find.h"
 
-void single_step(int itimestep, double dt, int ntotal, double *hsml, double *mass,
+void single_step(int &itimestep, double &dt, int &ntotal, double *hsml, double *mass,
   double **x,double **vx,double *u,double *s,double *rho,double *p,double *t,double *tdsdt,
   double **dx,double **dvx,double *du,double *ds,double *drho,int *itype,double **av)
 {
@@ -120,16 +120,15 @@ void single_step(int itimestep, double dt, int ntotal, double *hsml, double *mas
 	for(int i=1;i<=ntotal;i++)
 	{
 		for(int d=0;d<dim;d++)
-		{
   			dvx[d][i] = indvxdt[d][i] + exdvxdt[d][i] + ardvxdt[d][i];
-  		}
+
   		du[i] = du[i] + avdudt[i] + ahdudt[i];
 	}
 	if ((itimestep % print_step)==0)
 	{
 		cout<<"\n**** Information for particle **** "<<moni_particle<<endl;
-		cout << "internal a " << indvxdt[0][moni_particle] << " artifical a= " << ardvxdt[0][moni_particle]<<
-			"external a " << exdvxdt[0][moni_particle]<< "total a "<<dvx[0][moni_particle]<<endl;
+		cout << "internal a=" << indvxdt[0][moni_particle] << " artifical a=" << ardvxdt[0][moni_particle]<<
+			"\nexternal a=" << exdvxdt[0][moni_particle]<< " total a="<<dvx[0][moni_particle]<<endl;
 	}
 
 	delete pair_i;

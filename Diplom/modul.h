@@ -81,7 +81,7 @@ const int nsym = 0;
 // save_step  Save Timestep (To Disk File)
 // moni_particle: The particle number for information monitoring.
 const bool int_stat = true;
-const int print_step = 50, save_step = 500, moni_particle = 10;
+const int print_step = 1, save_step = 500, moni_particle = 10;
 const double pi = 3.14159265358979323846;
 // Simulation cases
 // shocktube = .true. : carry out shock tube simulation

@@ -14,7 +14,7 @@
 // dwdx Derivative of kernel with respect to x, y and z [in]
 // dedt produced artificial heat, adding to energy Eq. [out]
 
-void art_heat(int ntotal,double *hsml,double *mass,double **x,double **vx,int niac,double *rho,
+void art_heat(int ntotal,double *hsml,double *mass,double **x,double **vx,int &niac,double *rho,
 	double *u,double *c,int *pair_i,int *pair_j,double* w,double **dwdx,double *dedt)
 {
 	int i,j;

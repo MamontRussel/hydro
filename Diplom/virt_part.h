@@ -13,7 +13,7 @@
 
 #include <cstdio>
 
-void virt_part(int itimestep,int ntotal,int nvirt,double *hsml,double *mass,double **x,
+void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,double **x,
 	double **vx,double *rho,double *u,double *p,int *itype)
 {
 	FILE *in1, *in2, *in3;
