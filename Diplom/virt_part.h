@@ -1,4 +1,4 @@
-// Subroutine to determine the information of virtual particles
+// Function to determine the information of virtual particles
 // Here only the Monaghan type virtual particles for the 2D shear cavity driven problem are generated.
 // itimestep : Current time step [in]
 // ntotal Number of particles
@@ -30,7 +30,7 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,do
 		for (int j = 1; j <= nvirt; j++)
 		{
 			i = ntotal + j;
-			for (int d = 0; d < dim; d++)
+			for (int d = 1; d <= dim; d++)
 				fprintf(in1, "%d %f %f ", im, x[d][i], vx[d][i]);
 			fprintf(in2, "%d %f %f %f", im, mass[i], rho[i], p[i], u[i]);
 			fprintf(in3, "%d %d %f ", im, itype[i], hsml[i]);
@@ -49,38 +49,38 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,do
 		//Monaghan type virtual particle on the Upper side
 		for(int j=1;j<=2*mp+1;j++)
 		{
-			  nvirt = nvirt + 1;
-			  x[0][ntotal + nvirt] = (j-1)*dx/2;
-			  x[1][ntotal + nvirt] = x1;
-			  vx[0][ntotal + nvirt] = v_inf;
-			  vx[1][ntotal + nvirt] = 0.;
+			nvirt++;
+			x[1][ntotal + nvirt] = (j-1)*dx/2;
+			x[2][ntotal + nvirt] = x1;
+			vx[1][ntotal + nvirt] = v_inf;
+			vx[2][ntotal + nvirt] = 0.;
 		}
 		//Monaghan type virtual particle on the Lower side
 		for(int j=1;j<=2*mp+1;j++)
 		{
-			  nvirt = nvirt + 1;
-			  x[0][ntotal + nvirt] = (j-1)*dx/2;
-			  x[1][ntotal + nvirt] = 0.;
-			  vx[0][ntotal + nvirt] = 0.;
-			  vx[1][ntotal + nvirt] = 0.;
+			nvirt++;
+			x[1][ntotal + nvirt] = (j-1)*dx/2;
+			x[2][ntotal + nvirt] = 0.;
+			vx[1][ntotal + nvirt] = 0.;
+			vx[2][ntotal + nvirt] = 0.;
 		}
 		//Monaghan type virtual particle on the Left side
 		for(int j=1;j<=2*mp-1;j++)
 		{
 			  nvirt = nvirt + 1;
-			  x[0][ntotal + nvirt] = 0.;
-			  x[1][ntotal + nvirt] = j*dx/2;
-			  vx[0][ntotal + nvirt] = 0.;
+			  x[1][ntotal + nvirt] = 0.;
+			  x[2][ntotal + nvirt] = j*dx/2;
 			  vx[1][ntotal + nvirt] = 0.;
+			  vx[2][ntotal + nvirt] = 0.;
 		}
 		//Monaghan type virtual particle on the Right side
 		for(int j=1;j<=2*mp-1;j++)
 		{
 			  nvirt = nvirt + 1;
-			  x[0][ntotal + nvirt] = x1;
-			  x[1][ntotal + nvirt] = j*dx/2;
-			  vx[0][ntotal + nvirt] = 0.;
+			  x[1][ntotal + nvirt] = x1;
+			  x[2][ntotal + nvirt] = j*dx/2;
 			  vx[1][ntotal + nvirt] = 0.;
+			  vx[2][ntotal + nvirt] = 0.;
 		}
 		for(int j=1;j<=nvirt;j++)
 		{
@@ -101,7 +101,7 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,do
 		fprintf(in1, "%d\n", nvirt);
 		for(int j=ntotal+1;j<=ntotal+nvirt;j++)
 		{
-			for (int d = 0; d < dim; d++)
+			for (int d = 1; d <= dim; d++)
 					fprintf(in1, "%d %f %f ", i, x[d][i], vx[d][i]);
 			fprintf(in2, "%d %f %f %f", i, mass[i], rho[i], p[i], u[i]);
 			fprintf(in3, "%d %d %f ", i, itype[i], hsml[i]);

@@ -1,5 +1,4 @@
-// ========================================
-// 	Gamma law EOS: subroutine to calculate the pressure and sound
+// 	Gamma law EOS: function to calculate the pressure and sound
 // 	rho : Density [in]
 //  u : Internal energy [in]
 // 	p : Pressure [out]
@@ -14,7 +13,6 @@ void p_gas(double rho, double u,double  &p,double &c)
 	c = sqrt((gamma-1) * u);
 }
 
-// ============================================
 //  Artificial equation of s.tate for the artificial compressibility
 //  rho : Density [in]
 //  u : Internal energy [in]

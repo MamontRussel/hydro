@@ -1,4 +1,4 @@
-// Subroutine to evolve smoothing length
+// Function to evolve smoothing length
 // dt time step[in]
 // ntotal Number of particles[in]
 // mass Particle masses [in]
@@ -15,7 +15,7 @@ void h_upgrade(double &dt,int ntotal,double *mass,double **vx,double *rho,int &n
 {
 	int i, j;
 	double fac, hvcc;
-	double *dvx = new double[dim];
+	double *dvx = new double[dim+1];
 	double *vcc = new double[maxn];
 	double *dhsml = new double[maxn];
 
@@ -25,20 +25,21 @@ void h_upgrade(double &dt,int ntotal,double *mass,double **vx,double *rho,int &n
 	{
 		//	dh/dt = (-1/dim)*(h/rho)*(drho/dt).
 		for(i=1;i<=ntotal;i++)
-			vcc[i] = 0;
+			vcc[i] = 0.e0;
+
 		for(int k=1;k<=niac;k++)
 		{
 			i = pair_i[k];
 			j = pair_j[k];
-			for(int d=0;d<dim;d++)
+			for(int d=1;d<=dim;d++)
 				dvx[d] = vx[d][j] - vx[d][i];
-			hvcc = dvx[0]*dwdx[0][k];
-			for(int d=1;d<dim;d++)
+			hvcc = dvx[1]*dwdx[1][k];
+			for(int d=2;d<=dim;d++)
 				hvcc = hvcc + dvx[d]*dwdx[d][k];
-
-			vcc[i] = vcc[i] + mass[j] *hvcc/rho[j];
-			vcc[j] = vcc[j] + mass[i] *hvcc/rho[i];
+			vcc[i] = vcc[i] + mass[j]*hvcc/rho[j];
+			vcc[j] = vcc[j] + mass[i]*hvcc/rho[i];
 		}
+
 		for(i=1;i<=ntotal;i++)
 		{
 			dhsml[i] = (hsml[i]/dim)*vcc[i];

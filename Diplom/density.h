@@ -1,5 +1,4 @@
-// =================================================
-// 	Subroutine to calculate the density with SPH summation algorithm.
+// 	Function to calculate the density with SPH summation algorithm.
 // 	ntotal Number of particles [in]
 // 	hsml Smoothing Length [in]
 // 	mass Particle masses [in]
@@ -18,12 +17,12 @@ void sum_density(int ntotal, double *hsml, double *mass, int niac, int *pair_i,i
 {
 	int i, j;
 	double selfdens,r;
-	double *hv = new double[dim];
+	double *hv = new double[dim+1];
 	double *wi = new double[maxn];
 
 	// wi(maxn) integration'of the kernel itself
-	for(int d=0;d<dim;d++)
-		hv[d] = 0;
+	for(int d=1;d<=dim;d++)
+		hv[d] = 0.e0;
 
 	// Self density of each particle: Wii (Kernel for distance 0)
 	// and take contribution of particle itself:
@@ -34,6 +33,7 @@ void sum_density(int ntotal, double *hsml, double *mass, int niac, int *pair_i,i
 		kernel(r,hv,hsml[i],selfdens,hv);
 		wi[i]=selfdens*mass[i]/rho[i];
 	}
+
 	for(int k=1;k<=niac;k++)
 	{
 		i = pair_i[k];
@@ -41,12 +41,14 @@ void sum_density(int ntotal, double *hsml, double *mass, int niac, int *pair_i,i
 		wi[i] = wi[i] + mass[j]/rho[j]*w[k];
 		wi[j] = wi[j] + mass[i]/rho[i]*w[k];
 	}
+
 	// Secondly calculate the rho integration over the space
 	for(i=1;i<=ntotal;i++)
 	{
 		kernel(r,hv,hsml[i],selfdens,hv);
 		rho[i] = selfdens*mass[i];
 	}
+
 	// Calculate SPH sum for rho:
 	for(int k=1;k<=niac;k++)
 	{
@@ -55,6 +57,7 @@ void sum_density(int ntotal, double *hsml, double *mass, int niac, int *pair_i,i
 		rho[i] = rho[i] + mass[j]*w[k];
 		rho[j] = rho[j] + mass[i]*w[k];
 	}
+
 	// Thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 	if (nor_density)
 		for(i=1;i<=ntotal;i++)
@@ -64,8 +67,7 @@ void sum_density(int ntotal, double *hsml, double *mass, int niac, int *pair_i,i
 	delete wi;
 }
 
-// ===============================
-// Subroutine to calculate 'the density with SPH continuiity approach.
+// Function to calculate 'the density with SPH continuiity approach.
 // ntotal Number of particles [in]
 // mass Particle masses [in]
 // niac Number of interaction pairs [in]
@@ -83,7 +85,7 @@ void con_density(int ntotal,double *mass,int niac,int *pair_i,int *pair_j,double
 {
 	int i,j;
 	double vcc;
-	double *dvx = new double[dim];
+	double *dvx = new double[dim+1];
 	for(i=1;i<=ntotal;i++)
 		drhodt[i] = 0;
 
@@ -91,11 +93,11 @@ void con_density(int ntotal,double *mass,int niac,int *pair_i,int *pair_j,double
 	{
 		i = pair_i[k];
 		j = pair_j[k];
-		for(int d=0;d<dim;d++)
+		for(int d=1;d<=dim;d++)
 		  dvx[d] = vx[d][i] - vx[d][j];
 
-		vcc = dvx[0]*dwdx[0][k];
-		for(int d=0;d<dim;d++)
+		vcc = dvx[1]*dwdx[1][k];
+		for(int d=2;d<=dim;d++)
 		  vcc = vcc + dvx[d]*dwdx[d][k];
 
 		drhodt[i] = drhodt[i] + mass[j]*vcc;

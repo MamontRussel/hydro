@@ -1,4 +1,3 @@
-// ==============================================
 // This is a three dimensional SPH code, the followings are the
 // basic parameters needed in this code or calculated by this code
 // mass-- mass of particles [in]
@@ -30,8 +29,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	int *itype = new int[maxn];
 	int ntotal, maxtimestep,yesorno=1;
-	double **x = new double*[dim];
-	double **vx = new double*[dim];
+	double **x = new double*[dim+1];
+	double **vx = new double*[dim+1];
 	double *mass = new double[maxn];
 	double *rho = new double[maxn];
 	double *p = new double[maxn];
@@ -42,7 +41,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	double *hsml = new double[maxn];
 	double dt;
 
-	for (int i = 0; i < dim; i++)
+	for (int i = 0; i <= dim; i++)
 	{
 		x[i] = new double[maxn];
 		vx[i] = new double[maxn];

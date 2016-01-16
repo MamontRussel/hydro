@@ -24,20 +24,20 @@ void time_integration(double **x, double **vx, double *mass,
 {
 
   int itimestep, current_ts=0, nstart=0;
-  double **v_min = new double*[dim];
+  double **v_min = new double*[dim+1];
   double *u_min = new double[maxn];
   double *rho_min = new double[maxn];
-  double **dx = new double*[dim];
-  double **dvx = new double*[dim];
+  double **dx = new double*[dim+1];
+  double **dvx = new double*[dim+1];
   double *du = new double[maxn];
   double *drho = new double[maxn];
-  double **av = new double*[dim];
+  double **av = new double*[dim+1];
   double *ds = new double[maxn];
   double *t = new double[maxn];
   double *tdsdt = new double[maxn];
   double time = 0, temp_rho, temp_u;
 
-  for (int i = 0; i < dim; i++)
+  for (int i = 0; i <= dim; i++)
   {
 	  v_min[i] = new double[maxn];
 	  dx[i] = new double[maxn];
@@ -53,7 +53,7 @@ void time_integration(double **x, double **vx, double *mass,
   }
 
   for(int i=1;i<=ntotal;i++)
-    for(int d=0;d<dim;d++)
+    for(int d=1;d<=dim;d++)
     {
       av[d][i] = 0;
     }
@@ -76,24 +76,24 @@ void time_integration(double **x, double **vx, double *mass,
       {
         u_min[i] = u[i];
         temp_u=0;
-        if (dim==1)temp_u= -nsym*p[i]*vx[0][i]/x[0][i]/rho[i];
-        u[i]= u[i] + (dt/2)* (du[i]+temp_u);
+        if (dim==1)temp_u= -nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
+        u[i]= u[i] + (dt/2.)* (du[i]+temp_u);
         if(u[i]<0) u[i] = 0;
         if (!summation_density)
         {
           rho_min[i] = rho[i];
           temp_rho=0;
-          if (dim==1)temp_rho= -nsym*rho[i]*vx[0][i]/x[0][i];
-          rho[i] = rho[i] +(dt/2)*(drho[i]+ temp_rho);
+          if (dim==1)temp_rho= -nsym*rho[i]*vx[1][i]/x[1][i];
+          rho[i] = rho[i] +(dt/2.)*(drho[i]+ temp_rho);
         }
-        for(int d=0;d<dim;d++)
+        for(int d=1;d<=dim;d++)
         {
           v_min[d][i] = vx[d][i];
-          vx[d][i] = vx[d][i] + (dt/2)*dvx[d][i];
+          vx[d][i] = vx[d][i] + (dt/2.)*dvx[d][i];
         }
       }
     }
-    // ===================  ERROR =====================
+
     // Definition of variables out of the function vector:
 	single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u,
 		s, rho, p, t, tdsdt, dx, dvx, du, ds, drho, itype, av);
@@ -103,18 +103,18 @@ void time_integration(double **x, double **vx, double *mass,
       for(int i=1;i<=ntotal;i++)
       {
         temp_u=0;
-        if (dim==1) temp_u=-nsym*p[i]*vx[0][i]/x[0][i]/rho[i];
-        u[i] = u[i] + (dt/2)*(du[i] + temp_u);
+        if (dim==1) temp_u=-nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
+        u[i] = u[i] + (dt/2.)*(du[i] + temp_u);
         if(u[i]<0) u[i] = 0;
         if(!summation_density )
         {
           temp_rho=0;
-          if (dim==1) temp_rho=-nsym*rho[i]*vx[0][i]/x[0][i];
-          rho[i] = rho[i] + (dt/2)* (drho[i]+temp_rho);
+          if (dim==1) temp_rho=-nsym*rho[i]*vx[1][i]/x[1][i];
+          rho[i] = rho[i] + (dt/2.)* (drho[i]+temp_rho);
         }
-        for(int d=0;d<dim;d++)
+        for(int d=1;d<=dim;d++)
         {
-          vx[d][i] = vx[d][i] + (dt/2) * dvx[d][i] + av[d][i];
+          vx[d][i] = vx[d][i] + (dt/2.) * dvx[d][i] + av[d][i];
           x[d][i] = x[d][i] + dt * vx[d][i];
         }
       }
@@ -124,16 +124,18 @@ void time_integration(double **x, double **vx, double *mass,
       for(int i=1;i<=ntotal;i++)
       {
         temp_u=0;
-        if (dim==1) temp_u=-nsym*p[i]*vx[0][i]/x[0][i]/rho[i];
+        if (dim==1) temp_u=-nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
         u[i] = u_min[i] + dt*(du[i]+temp_u);
         if(u[i]<0) u[i] = 0;
+
         if (!summation_density )
         {
           temp_rho=0;
-          if (dim==1) temp_rho=-nsym*rho[i]*vx[0][i]/x[0][i];
+          if (dim==1) temp_rho=-nsym*rho[i]*vx[1][i]/x[1][i];
           rho[i] = rho_min[i] + dt*(drho[i]+temp_rho);
         }
-        for(int d=0;d<dim;d++)
+
+        for(int d=1;d<=dim;d++)
         {
           vx[d][i] = v_min[d][i] + dt * dvx[d][i] + av[d][i];
           x[d][i] = x[d][i] + dt * vx[d][i];
@@ -141,21 +143,20 @@ void time_integration(double **x, double **vx, double *mass,
       }
     }
     time = time + dt;
+
     if ((itimestep % save_step)==0)
     {
-      // ===========  ERROR  ==============================
 		output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal);
-      // ==================================================
     }
     if ((itimestep & print_step)==0)
     {
 		cout << "x  velocity  dvx\n";
-		cout << x[0][moni_particle] << " " << vx[0][moni_particle] << " " << dvx[0][moni_particle]<<endl;
+		cout << x[1][moni_particle] << " " << vx[1][moni_particle] << " " << dvx[1][moni_particle]<<endl;
     }
   }
 
   //double **v_min = new double*[dim];
-  for (int i = 0; i < dim; i++)
+  for (int i = 0; i <= dim; i++)
 	  delete v_min[i];
   delete v_min;
   delete u_min;

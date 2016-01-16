@@ -1,4 +1,4 @@
-// Subroutine to calculate the smoothing funciton for each particle and
+// Function to calculate the smoothing funciton for each particle and
 // the interaction parameters used by the SPH algorithm. Interaction
 // pairs are determined by directly comparing the particle distance
 // with the corresponding smoothing length.
@@ -17,9 +17,10 @@ void direct_find(int itimestep, int ntotal, double *hsml, double **x,int &niac,i
 	int *pair_j,double *w,double **dwdx,int *countiac)
 {
 	int i, j,sumiac, maxiac, miniac, noiac, maxp=0, minp, scale_k;
-	double *dxiac = new double[dim]; 
+	double *dxiac = new double[dim+1]; 
 	double driac, r, mhsml;
-	double *tdwdx = new double[dim];
+	double *tdwdx = new double[dim+1];
+
 	if (skf==1) scale_k = 2;
 	else if (skf == 2) scale_k = 3;
 	else if (skf == 3) scale_k = 3;
@@ -28,12 +29,13 @@ void direct_find(int itimestep, int ntotal, double *hsml, double **x,int &niac,i
 		countiac[i] = 0;
 
 	niac = 0;
-	for(i=1;i<ntotal;i++)
+
+	for(i=1;i<=ntotal-1;i++)
 		for(j=i+1;j<=ntotal;j++)
 		{
-			dxiac[0] = x[0][i] - x[0][j];
-			driac = dxiac[0]*dxiac[0];
-			for(int d=0;d<dim;d++)
+			dxiac[1] = x[1][i] - x[1][j];
+			driac = dxiac[1]*dxiac[1];
+			for(int d=2;d<=dim;d++)
 			{
 				dxiac[d] = x[d][i] - x[d][j];
 				driac = driac + dxiac[d]*dxiac[d];
@@ -53,7 +55,7 @@ void direct_find(int itimestep, int ntotal, double *hsml, double **x,int &niac,i
 					countiac[j]++;
 					// Kernel and derivations of kernel
 					kernel(r,dxiac,mhsml,w[niac],tdwdx);
-					for(int d=0;d<dim;d++)
+					for(int d=1;d<=dim;d++)
 						dwdx[d][niac] = tdwdx[d];
 				}
 				else
@@ -69,7 +71,6 @@ void direct_find(int itimestep, int ntotal, double *hsml, double **x,int &niac,i
 	maxiac = 0;
 	miniac = 1000;
 	noiac = 0;
-
 	for(int i=1;i<=ntotal;i++)
 	{
 		sumiac = sumiac + countiac[i];

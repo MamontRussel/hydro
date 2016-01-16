@@ -1,5 +1,4 @@
-// =======================================
-// Subroutine to calculate the artificial viscosity (Monaghan, 1992)
+// Function to calculate the artificial viscosity
 // ntotal Number of particles (including virtual particles) [in]
 // hsml Smoothing Length [in]
 // mass Particle masses [in]
@@ -20,20 +19,20 @@ void art_visc(int ntotal,double *hsml,double *mass,double **x,double **vx,int ni
 {
 	int i,j;
 	double dx,piv,muv, vr, rr, h, mc, mrho, mhsml;
-	double *dvx = new double[dim];
+	double *dvx = new double[dim+1];
 	// Parameter for the artificial viscosity:
 	// Shear viscosity
-	const int alpha = 1;
+	const int alpha = 1.e0;
 	// Bulk viscosity
-	const int beta = 1;
+	const int beta = 1.e0;
 	// Parameter to avoid singularities
-	double etq = 0.1;
+	double etq = 0.1e0;
 
 	for(i=1;i<=ntotal;i++)
 	{
-		for(int d=0;d<dim;d++)
-			dvxdt[d][i] = 0;
-		dedt[i] = 0;
+		for(int d=1;d<=dim;d++)
+			dvxdt[d][i] = 0.e0;
+		dedt[i] = 0.e0;
 	}
 	//Calculate SPH sum for artificial viscosity
 	for(int k=1;k<=niac;k++)
@@ -41,9 +40,9 @@ void art_visc(int ntotal,double *hsml,double *mass,double **x,double **vx,int ni
 		i = pair_i[k];
 		j = pair_j[k];
 		mhsml= (hsml[i]+hsml[j])/2;
-		vr = 0;
-		rr = 0;
-		for(int d=0;d<dim;d++)
+		vr = 0.e0;
+		rr = 0.e0;
+		for(int d=1;d<=dim;d++)
 		{
 			dvx[d] = vx[d][i] - vx[d][j];
 			dx = x[d][i] - x[d][j];
@@ -51,8 +50,7 @@ void art_visc(int ntotal,double *hsml,double *mass,double **x,double **vx,int ni
 			rr = rr + dx*dx;
 		}
 		//Artificial viscous force only if v_ij * r_ij < 0
-		//if (vr.lt.s0)
-		if (vr<0)
+		if (vr<0.e0)
 		{
 			//Calculate muv_ij = hsml v_lj * r_ij / ( r_ij"2 + hsml~2 etq~2 )
 			muv = mhsml*vr/(rr + mhsml*mhsml*etq*etq);
@@ -61,9 +59,9 @@ void art_visc(int ntotal,double *hsml,double *mass,double **x,double **vx,int ni
 			mrho = 0.5*(rho[i] + rho[j]);
 			piv = (beta*muv - alpha*mc)*muv/mrho;
 			//Calculate SPH sum for artificial viscous force
-			for(int d=0;d<dim;d++)
+			for(int d=1;d<=dim;d++)
 			{
-				h = piv*dwdx[d][k];
+				h = -piv*dwdx[d][k];
 				dvxdt[d][i] = dvxdt[d][i] + mass[j]*h;
 				dvxdt[d][j] = dvxdt[d][j] - mass[i]*h;
 				dedt[i] = dedt[i] - mass[j]*dvx[d]*h;
