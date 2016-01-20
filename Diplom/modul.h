@@ -3,7 +3,7 @@
 // in the entire SPH software packages.
 
 // dim : Dimension of the problem (1, 2 or 3)
-const int dim=1;
+const int dim=2;
 //	maxn : Maximum number of particles
 //	max_interation : Maximum number of interaction pairs
 const int maxn=12000, max_interaction = 100*maxn;
@@ -81,7 +81,7 @@ const int nsym = 0;
 // save_step  Save Timestep (To Disk File)
 // moni_particle: The particle number for information monitoring.
 const bool int_stat = true;
-const int print_step = 1, save_step = 500, moni_particle = 10;
+const int print_step = 100, save_step = 500, moni_particle = 10;
 const double pi = 3.14159265358979323846;
 // Simulation cases
 // shocktube = .true. : carry out shock tube simulation

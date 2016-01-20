@@ -24,8 +24,10 @@ void output(double **x,double **vx,double *mass,double *rho,
 	fprintf(out1, "%d\n", ntotal);
 	for( int i=1;i<=ntotal;i++)
 	{
+		fprintf(out1, "%d ", i);
 		for (int d = 1; d <= dim;d++)
-			fprintf(out1, "%d %f %f \n", i, x[d][i], vx[d][i]);
+			fprintf(out1, "%f %f",x[d][i], vx[d][i]);
+		fprintf(out1, "\n");
 		fprintf(out2, "%d %f %f %f %f \n", i, mass[i], rho[i], p[i], u[i]);
 		fprintf(out3, "%d %d %f \n", i,itype[i], hsml[i]);
 	}

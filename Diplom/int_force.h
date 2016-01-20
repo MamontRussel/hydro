@@ -251,10 +251,7 @@ void int_force(int &itimestep, double &dt, int ntotal, double *hsml, double *mas
 	// Change of specific internal energy de/dt = T ds/dt - p/rho vc,c:
 
 	for (i = 1; i <= ntotal; i++)
-	{
 		dedt[i] = tdsdt[i] + 0.5*dedt[i];
-	cout << dedt[i] << endl;
-}
 
 	delete dvx;
 	delete txx;
