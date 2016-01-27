@@ -64,9 +64,9 @@ const int skf = 1;
 // 			           .false.: No considering of self_gravity
 // 	nor_density = .true. : Density normalization by using CSPM,
 // 			          .false.: No normalization.
-const bool summation_density=true, average_velocity=false, config_input=false;
-const bool virtual_part=false, vp_input=false, visc=false, ex_force=false, heat_artificial=false;
-const bool	visc_artificial=true, self_gravity=false, nor_density=false;
+const bool summation_density=true, average_velocity=true, config_input=false;
+const bool virtual_part=true, vp_input=false, visc=true, ex_force=true, heat_artificial=false;
+const bool	visc_artificial=false, self_gravity=false, nor_density=true;
 
 // Symmetry of the problem
 // nsym   = 0 : no symmetry,
@@ -86,6 +86,6 @@ const double pi = 3.14159265358979323846;
 // Simulation cases
 // shocktube = .true. : carry out shock tube simulation
 // shearcavity = .true. : carry out shear cavity simulation
-const bool shocktube = true, shearcavity = false;
+const bool shocktube = false, shearcavity = true;
 
 //=========== END  PARAMETERS ===============================

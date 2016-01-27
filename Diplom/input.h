@@ -52,19 +52,16 @@ void input(double **x, double **vx, double *mass, double *rho,
 		if (shocktube)shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal);
 		if (shearcavity)shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal);
 
-		for(int i=1;i<=ntotal;i++)
+		for (int i = 1; i <= ntotal; i++)
 		{
-			fprintf(in1, "%d\n", ntotal);
-			for (int i = 1; i <= ntotal; i++)
-			{
 				fprintf(in1, "%d ", i);
 				for (int d = 1; d <= dim; d++)
 					fprintf(in1, "%f %f", x[d][i], vx[d][i]);
 				fprintf(in1, "\n");
 				fprintf(in2, "%d %f %f %f %f \n", i, mass[i], rho[i], p[i], u[i]);
 				fprintf(in3, "%d %d %f \n", i, itype[i], hsml[i]);
-			}
 		}
+
 		cout << "**********************************************\n";
 		cout << "**Initial particle configuration generated ***\n";
 		cout << "********  Total number of particles   " << ntotal << endl;
@@ -91,7 +88,7 @@ void shock_tube(double **x, double **vx, double *mass, double *rho,
  {
   
 	double space_x;
-	ntotal=400;
+	ntotal = 400;
 	space_x=0.6/80.;
 
 	for(int i=1;i<=ntotal;i++)

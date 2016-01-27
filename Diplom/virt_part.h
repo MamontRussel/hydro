@@ -85,7 +85,7 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,do
 		for(int j=1;j<=nvirt;j++)
 		{
 			  rho[ntotal + j] = 1000.;
-			  mass[ntotal + j] = rho[ntotal + i] * dx * dx;
+			  mass[ntotal + j] = rho[ntotal + j] * dx * dx;
 			  p[ntotal + j] =0.;
 			  u[ntotal + j] = 357.1;
 			  itype[ntotal + j] = -2;
@@ -101,11 +101,14 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,double *hsml,double *mass,do
 		fprintf(in1, "%d\n", nvirt);
 		for(int j=ntotal+1;j<=ntotal+nvirt;j++)
 		{
+			fprintf(in1, "%d ", j);
 			for (int d = 1; d <= dim; d++)
-					fprintf(in1, "%d %f %f ", i, x[d][i], vx[d][i]);
-			fprintf(in2, "%d %f %f %f", i, mass[i], rho[i], p[i], u[i]);
-			fprintf(in3, "%d %d %f ", i, itype[i], hsml[i]);
+				fprintf(in1, "%f %f", x[d][j], vx[d][j]);
+			fprintf(in1, "\n");
+			fprintf(in2, "%d %f %f %f %f \n", j, mass[j], rho[j], p[j], u[j]);
+			fprintf(in3, "%d %d %f \n", j, itype[j], hsml[j]);
 		}
+
 		fclose(in1);
 		fclose(in2);
 		fclose(in3);

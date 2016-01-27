@@ -88,16 +88,19 @@ void int_force(int &itimestep, double &dt, int ntotal, double *hsml, double *mas
 				hyz = dvx[2] * dwdx[3][k] + dvx[3] * dwdx[2][k];
 				hzz = 2.e0 * dvx[3] * dwdx[3][k] - dvx[1] * dwdx[1][k] - dvx[2] * dwdx[2][k];
 			}
-			hxx = 2. / 3. * hxx;
+			/*hxx = 2. / 3. * hxx;
 			hyy = 2. / 3. * hyy;
-			hzz = 2. / 3. * hzz;
+			hzz = 2. / 3. * hzz;*/
 			if (dim == 1)
 			{
+				hxx = 2. / 3. * hxx;
 				txx[i] = txx[i] + mass[j] * hxx / rho[j];
 				txx[j] = txx[j] + mass[i] * hxx / rho[i];
 			}
 			else if (dim == 2)
 			{
+				hxx = 2. / 3. * hxx;
+				hyy = 2. / 3. * hyy;
 				txx[i] = txx[i] + mass[j] * hxx / rho[j];
 				txx[j] = txx[j] + mass[i] * hxx / rho[i];
 				txy[i] = txy[i] + mass[j] * hxy / rho[j];
@@ -107,6 +110,9 @@ void int_force(int &itimestep, double &dt, int ntotal, double *hsml, double *mas
 			}
 			else if (dim == 3)
 			{
+				hxx = 2. / 3. * hxx;
+				hyy = 2. / 3. * hyy;
+				hzz = 2. / 3. * hzz;
 				txx[i] = txx[i] + mass[j] * hxx / rho[j];
 				txx[j] = txx[j] + mass[i] * hxx / rho[i];
 				txy[i] = txy[i] + mass[j] * hxy / rho[j];
