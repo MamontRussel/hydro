@@ -4,44 +4,50 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     ui.setupUi(this);
-    init();
 }
 
 void MainWindow::drawPlots()
 {
     ui.plot1->addGraph();
-    ui.plot1->graph(0)->setPen(QPen(Qt::blue)); // line color blue for first graph
-    ui.plot1->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); // first graph will be filled with translucent blue
-    ui.plot1->addGraph();
-    ui.plot1->graph(1)->setPen(QPen(Qt::red)); // line color red for second graph
-    // generate some points of data (y0 for first, y1 for second graph):
-    QVector<double> x(250), y0(250), y1(250);
-    for (int i=0; i<250; ++i)
+    QVector<double> index(ntotal),rhod(ntotal);
+    for (int i=0; i<ntotal; ++i)
     {
-      x[i] = i;
-      y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
-      y1[i] = qExp(-i/150.0);              // exponential envelope
+        index[i] = i;
+        rhod[i] = rho[i];
     }
-    // configure right and top axis to show ticks but no labels:
-    // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
-    ui.plot1->xAxis2->setVisible(true);
-    ui.plot1->xAxis2->setTickLabels(false);
-    ui.plot1->yAxis2->setVisible(true);
-    ui.plot1->yAxis2->setTickLabels(false);
-    // make left and bottom axes always transfer their ranges to right and top axes:
-    connect(ui.plot1->xAxis, SIGNAL(rangeChanged(QCPRange)), ui.plot1->xAxis2, SLOT(setRange(QCPRange)));
-    connect(ui.plot1->yAxis, SIGNAL(rangeChanged(QCPRange)), ui.plot1->yAxis2, SLOT(setRange(QCPRange)));
-    // pass data points to graphs:
-    ui.plot1->graph(0)->setData(x, y0);
-    ui.plot1->graph(1)->setData(x, y1);
-    // let the ranges scale themselves so graph 0 fits perfectly in the visible area:
-    ui.plot1->graph(0)->rescaleAxes();
-    // same thing for graph 1, but only enlarge ranges (in case graph 1 is smaller than graph 0):
-    ui.plot1->graph(1)->rescaleAxes(true);
-    // Note: we could have also just called customPlot->rescaleAxes(); instead
-    // Allow user to drag axis ranges with mouse, zoom with mouse wheel and select graphs by clicking:
+    ui.plot1->graph(0)->setData(index, rhod);
+    ui.plot1->graph(0)->rescaleAxes(true);
     ui.plot1->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
+    ui.plot2->addGraph();
+    QVector<double> vd(ntotal);
+    for (int i=0; i<ntotal; ++i)
+    {
+        vd[i] = vx[1][i];
+    }
+    ui.plot2->graph(0)->setData(index, vd);
+    ui.plot2->graph(0)->rescaleAxes(true);
+    ui.plot2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
+    ui.plot3->addGraph();
+    QVector<double> ud(ntotal);
+    for (int i=0; i<ntotal; ++i)
+    {
+        ud[i] = u[i];
+    }
+    ui.plot3->graph(0)->setData(index, ud);
+    ui.plot3->graph(0)->rescaleAxes(true);
+    ui.plot3->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
+    ui.plot4->addGraph();
+    QVector<double> pd(ntotal);
+    for (int i=0; i<ntotal; ++i)
+    {
+        pd[i] = p[i];
+    }
+    ui.plot4->graph(0)->setData(index, pd);
+    ui.plot4->graph(0)->rescaleAxes(true);
+    ui.plot4->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 }
 
 void MainWindow::init()
@@ -75,20 +81,12 @@ void MainWindow::init()
             hsml[j] = (float)NULL;
          }
     }
-
-//    delete itype;
-//    delete mass;
-//    delete rho;
-//    delete p;
-//    delete u;
-//    delete c;
-//    delete s;
-//    delete e;
-//    delete hsml;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
+    init();
+    ui.progressBar->setValue(0);
     if (shocktube) dt = 0.005;
     if (shearcavity) dt = 5.e-5;
 
@@ -96,4 +94,16 @@ void MainWindow::on_pushButton_clicked()
     maxtimestep=ui.lineEdit->text().toInt();
     time_integration(x, vx, mass, rho, p, u,itype, hsml, ntotal, maxtimestep, dt);
     output(x, vx, mass, rho, p, u, itype, hsml, ntotal);
+    drawPlots();
+    ui.progressBar->setValue(100);
+
+    delete itype;
+    delete mass;
+    delete rho;
+    delete p;
+    delete u;
+    delete c;
+    delete s;
+    delete e;
+    delete hsml;
 }

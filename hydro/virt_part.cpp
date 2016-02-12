@@ -9,9 +9,9 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,floa
 
     if (vp_input)
     {
-        in1 = fopen("xv_vp.dat", "r");
-        in2 = fopen("state_vp.da", "r");
-        in3 = fopen("other_vp.dat", "r");
+        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/xv_vp.dat", "r");
+        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/state_vp.dat", "r");
+        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/other_vp.dat", "r");
         fscanf(in1, "%d", &nvirt);
 
         for (int j = 1; j <= nvirt; j++)

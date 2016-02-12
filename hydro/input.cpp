@@ -11,9 +11,9 @@ void input(float **x, float **vx, float *mass, float *rho,
     // load initial particle information from external disk file
     if(config_input)  // FALSE!!!
     {
-        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_xv.dat", "r");
-        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_state.dat", "r");
-        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_other.dat", "r");
+        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_xv.dat", "r");
+        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_state.dat", "r");
+        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_other.dat", "r");
 
         cout << "**********************************************\n";
         cout << "Loading initial particle configuration...\n";
@@ -30,9 +30,9 @@ void input(float **x, float **vx, float *mass, float *rho,
     }
     else
     {
-        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/ini_xv.dat", "w");
-        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/ini_state.dat", "w");
-        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/ini_other.dat", "w");
+        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/ini_xv.dat", "w");
+        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/ini_state.dat", "w");
+        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/ini_other.dat", "w");
         // shocktube = TRUE
         if (shocktube)shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal);
         if (shearcavity)shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal);

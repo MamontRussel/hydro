@@ -15,6 +15,7 @@
 // itype-- types of particles
 // hsml-- smoothing lengths of particles
 // ntotal-- total particle number
+
 void output(float **x,float **vx,float *mass,float *rho,float *p,float *u,int *itype,float *hsml,int ntotal);
 
 #endif

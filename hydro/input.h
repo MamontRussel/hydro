@@ -14,6 +14,7 @@
 // itype-- types of particles [out]
 // hsml-- smoothing lengths of particles [out]
 // ntotal-- total particle number [out]
+
 void input(float **x, float **vx, float *mass, float *rho,
     float *p, float *u, int *itype, float *hsml, int &ntotal);
 
@@ -28,6 +29,7 @@ void input(float **x, float **vx, float *mass, float *rho,
 // =1 ideal gas
 // hsml-- smoothing lengths of particles
 // ntotal-- total particle number
+
 void shock_tube(float **x, float **vx, float *mass, float *rho,
     float *p, float *u, int *itype, float *hsml, int &ntotal);
 
@@ -44,6 +46,7 @@ void shock_tube(float **x, float **vx, float *mass, float *rho,
 // h-- smoothing lengths of particles
 // ntotal-- total particle number
 // initial data for the Re = 1
+
 void shear_cavity(float **x, float **vx, float *mass, float *rho,
     float *p, float *u, int *itype, float *hsml, int &ntotal);
 

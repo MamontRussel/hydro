@@ -5,9 +5,9 @@ void output(float **x,float **vx,float *mass,float *rho,
 {
     FILE *out1, *out2, *out3;
 
-    out1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_xv.dat", "w");
-    out2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_state.dat", "w");
-    out3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/f_other.dat", "w");
+    out1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_xv.dat", "w");
+    out2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_state.dat", "w");
+    out3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_other.dat", "w");
 
     fprintf(out1, "%d\n", ntotal);
     for( int i=1;i<=ntotal;i++)
