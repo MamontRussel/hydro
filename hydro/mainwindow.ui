@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>728</width>
-    <height>475</height>
+    <width>763</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>280</y>
-      <width>691</width>
+      <y>350</y>
+      <width>721</width>
       <height>80</height>
      </rect>
     </property>
@@ -57,8 +57,8 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>370</y>
-      <width>691</width>
+      <y>440</y>
+      <width>721</width>
       <height>55</height>
      </rect>
     </property>
@@ -87,8 +87,8 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>681</width>
-      <height>271</height>
+      <width>721</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -101,10 +101,10 @@
      <widget class="QCustomPlot" name="plot1" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>10</y>
-        <width>641</width>
-        <height>221</height>
+        <width>691</width>
+        <height>291</height>
        </rect>
       </property>
      </widget>
@@ -116,13 +116,12 @@
      <widget class="QCustomPlot" name="plot2" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>10</y>
-        <width>641</width>
-        <height>221</height>
+        <width>691</width>
+        <height>291</height>
        </rect>
       </property>
-      <zorder>tabWidget</zorder>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
@@ -132,10 +131,10 @@
      <widget class="QCustomPlot" name="plot3" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>10</y>
-        <width>641</width>
-        <height>221</height>
+        <width>691</width>
+        <height>291</height>
        </rect>
       </property>
      </widget>
@@ -147,10 +146,10 @@
      <widget class="QCustomPlot" name="plot4" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>10</y>
-        <width>641</width>
-        <height>221</height>
+        <width>691</width>
+        <height>291</height>
        </rect>
       </property>
      </widget>
@@ -162,7 +161,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>728</width>
+     <width>763</width>
      <height>22</height>
     </rect>
    </property>

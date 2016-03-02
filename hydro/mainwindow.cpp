@@ -8,46 +8,69 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::drawPlots()
 {
+    double min=10000,max=-10000,min1,max1,min2,max2,max3,min3;
+    min1=min2=min3=min;
+    max1=max2=max3=max;
     ui.plot1->addGraph();
     QVector<double> index(ntotal),rhod(ntotal);
-    for (int i=0; i<ntotal; ++i)
+    for (int i=130; i<370; ++i)
     {
         index[i] = i;
         rhod[i] = rho[i];
+        if(rho[i]>max)max=rho[i];
+        if(rho[i]<min)min=rho[i];
     }
     ui.plot1->graph(0)->setData(index, rhod);
-    ui.plot1->graph(0)->rescaleAxes(true);
-    ui.plot1->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    ui.plot1->xAxis->setRange(230,350);
+    ui.plot1->yAxis->setRange(min,max);
+    ui.plot1->replot();
+    //ui.plot1->graph(0)->rescaleAxes(true);
+    //ui.plot1->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
     ui.plot2->addGraph();
     QVector<double> vd(ntotal);
-    for (int i=0; i<ntotal; ++i)
+    for (int i=130; i<370; ++i)
     {
         vd[i] = vx[1][i];
+        if(vx[1][i]>max1)max1=vx[1][i];
+        if(vx[1][i]<min1)min1=vx[1][i];
     }
     ui.plot2->graph(0)->setData(index, vd);
-    ui.plot2->graph(0)->rescaleAxes(true);
-    ui.plot2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    ui.plot2->xAxis->setRange(230,350);
+    ui.plot2->yAxis->setRange(min1,max1);
+    ui.plot2->replot();
+    //ui.plot2->graph(0)->rescaleAxes(true);
+    //ui.plot2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
     ui.plot3->addGraph();
     QVector<double> ud(ntotal);
-    for (int i=0; i<ntotal; ++i)
+    for (int i=130; i<370; ++i)
     {
         ud[i] = u[i];
+        if(u[i]>max2)max2=u[i];
+        if(u[i]<min2)min2=u[i];
     }
     ui.plot3->graph(0)->setData(index, ud);
-    ui.plot3->graph(0)->rescaleAxes(true);
-    ui.plot3->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    ui.plot3->xAxis->setRange(230,350);
+    ui.plot3->yAxis->setRange(min2,max2);
+    ui.plot3->replot();
+    //ui.plot3->graph(0)->rescaleAxes(true);
+    //ui.plot3->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
     ui.plot4->addGraph();
     QVector<double> pd(ntotal);
-    for (int i=0; i<ntotal; ++i)
+    for (int i=130; i<370; ++i)
     {
         pd[i] = p[i];
+        if(p[i]>max3)max3=p[i];
+        if(p[i]<min3)min3=p[i];
     }
     ui.plot4->graph(0)->setData(index, pd);
-    ui.plot4->graph(0)->rescaleAxes(true);
-    ui.plot4->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+    ui.plot4->xAxis->setRange(230,350);
+    ui.plot4->yAxis->setRange(min3,max3);
+    ui.plot4->replot();
+//    ui.plot4->graph(0)->rescaleAxes(true);
+//    ui.plot4->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 }
 
 void MainWindow::init()
