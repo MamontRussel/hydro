@@ -6,7 +6,7 @@
 // in the entire SPH software packages.
 
 // dim : Dimension of the problem (1, 2 or 3)
-const int dim=1;
+extern int dim;
 //	maxn : Maximum number of particles
 //	max_interation : Maximum number of interaction pairs
 const int maxn=12000, max_interaction = 100*maxn;
@@ -67,9 +67,8 @@ const int skf = 1;
 // 			           .false.: No considering of self_gravity
 // 	nor_density = .true. : Density normalization by using CSPM,
 // 			          .false.: No normalization.
-const bool summation_density=true, average_velocity=false, config_input=false;
-const bool virtual_part=false, vp_input=false, visc=false, ex_force=false, heat_artificial=false;
-const bool	visc_artificial=true, self_gravity=false, nor_density=false;
+extern bool summation_density, average_velocity, config_input,virtual_part, vp_input;
+extern bool visc, ex_force, heat_artificial,visc_artificial, self_gravity, nor_density;
 
 // Symmetry of the problem
 // nsym   = 0 : no symmetry,
@@ -89,7 +88,7 @@ const float pi = 3.14159265358979323846;
 // Simulation cases
 // shocktube = .true. : carry out shock tube simulation
 // shearcavity = .true. : carry out shear cavity simulation
-const bool shocktube = true, shearcavity = false;
+extern bool shocktube, shearcavity;
 
 //=========== END  PARAMETERS ===============================
 #endif
