@@ -41,7 +41,7 @@ void input(float **x, float **vx, float *mass, float *rho,
         {
                 fprintf(in1, "%d ", i);
                 for (int d = 1; d <= dim; d++)
-                    fprintf(in1, "%f %f", x[d][i], vx[d][i]);
+                    fprintf(in1, "%f %f ", x[d][i], vx[d][i]);
                 fprintf(in1, "\n");
                 fprintf(in2, "%d %f %f %f %f \n", i, mass[i], rho[i], p[i], u[i]);
                 fprintf(in3, "%d %d %f \n", i, itype[i], hsml[i]);

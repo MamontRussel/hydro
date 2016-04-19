@@ -203,11 +203,11 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
-      <string>V</string>
+      <string>Vx</string>
      </attribute>
      <widget class="QCustomPlot" name="plot1_2" native="true">
       <property name="geometry">
@@ -220,9 +220,14 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_7">
+     <attribute name="title">
+      <string>Izolines</string>
+     </attribute>
+    </widget>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
-      <string>Y</string>
+      <string>Vy</string>
      </attribute>
      <widget class="QCustomPlot" name="plot2_2" native="true">
       <property name="geometry">

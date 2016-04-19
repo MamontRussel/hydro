@@ -50,39 +50,62 @@ void MainWindow::drawPlots()
 {
     if(dim==2)
     {
-//        for(int i=0;i<ntotal;i++)
-//            qDebug()<<vx[1][i]<<vx[2][i];
-
         double min=10000,max=-10000,min1,max1,min2,max2,max3,min3;
         min1=min2=min3=min;
         max1=max2=max3=max;
-        ui.plot1_2->addGraph();
-        QVector<double> index(ntotal),v(ntotal);
-        for (int i=0; i<ntotal; ++i)
+        ui.plot2_2->addGraph();
+        QVector<double> index(ntotal),v(ntotal),v2(ntotal);
+        for (int i=160; i<201; ++i)
         {
             index[i] = i;
-            v[i] = vx[1][i];
-            if(vx[1][i]>max)max=vx[1][i];
-            if(vx[1][i]<min)min=vx[1][i];
+            v[i] = x[1][i];
+            if(x[1][i]>max)max=x[1][i];
+            if(x[1][i]<min)min=x[1][i];
+            v2[i] = x[2][i];
+            if(x[2][i]>max1)max1=x[2][i];
+            if(x[2][i]<min1)min1=x[2][i];
         }
-        ui.plot1_2->graph(0)->setData(index, v);
-        ui.plot1_2->xAxis->setRange(0,ntotal);
-        ui.plot1_2->yAxis->setRange(min,max);
-        ui.plot1_2->replot();
 
 
-        ui.plot2_2->addGraph();
-        QVector<double> v2(ntotal);
-        for (int i=0; i<ntotal; ++i)
-        {
-            v2[i] = vx[2][i];
-            if(vx[2][i]>max1)max1=vx[2][i];
-            if(vx[2][i]<min1)min1=vx[2][i];
-        }
-        ui.plot2_2->graph(0)->setData(index, v2);
-        ui.plot2_2->xAxis->setRange(0,ntotal);
+        ui.plot2_2->graph(0)->setData(v, v2);
+        ui.plot2_2->xAxis->setRange(min,max);
         ui.plot2_2->yAxis->setRange(min1,max1);
         ui.plot2_2->replot();
+        ui.plot2_2->graph(0)->rescaleAxes(true);
+        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+//        double min=10000,max=-10000,min1,max1,min2,max2,max3,min3;
+//        min1=min2=min3=min;
+//        max1=max2=max3=max;
+//        ui.plot1_2->addGraph();
+//        QVector<double> index(ntotal),v(ntotal);
+//        for (int i=200; i<241; ++i)
+//        {
+//            index[i] = i;
+//            v[i] = x[1][i];
+//            if(x[1][i]>max)max=x[1][i];
+//            if(x[1][i]<min)min=x[1][i];
+//        }
+//        ui.plot1_2->graph(0)->setData(index, v);
+//        ui.plot1_2->xAxis->setRange(200,241);
+//        ui.plot1_2->yAxis->setRange(min,max);
+//        ui.plot1_2->replot();
+//        ui.plot1_2->graph(0)->rescaleAxes(true);
+//        ui.plot1_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
+//        ui.plot2_2->addGraph();
+//        QVector<double> v2(ntotal);
+//        for (int i=160; i<201; ++i)
+//        {
+//            v2[i] = x[2][i];
+//            if(x[2][i]>max1)max1=x[2][i];
+//            if(x[2][i]<min1)min1=x[2][i];
+//        }
+//        ui.plot2_2->graph(0)->setData(index, v2);
+//        ui.plot2_2->xAxis->setRange(160,201);
+//        ui.plot2_2->yAxis->setRange(min1,max1);
+//        ui.plot2_2->replot();
+//        ui.plot2_2->graph(0)->rescaleAxes(true);
+//        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
     }
     else
     {
@@ -226,6 +249,7 @@ void MainWindow::on_radioButton_2_clicked()
     nor_density=false;
     shocktube=true;
     shearcavity=false;
+    ui.lineEdit->setText("22");
     ui.tabWidget->show();
     ui.tabWidget_2->hide();
 }
@@ -246,6 +270,7 @@ void MainWindow::on_radioButton_clicked()
     nor_density=true;
     shocktube=false;
     shearcavity=true;
+    ui.lineEdit->setText("1000");
     ui.tabWidget->hide();
     ui.tabWidget_2->show();
 }
