@@ -17,8 +17,12 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,floa
         for (int j = 1; j <= nvirt; j++)
         {
             i = ntotal + j;
+            fprintf(in1, "%d ", i);
             for (int d = 1; d <= dim; d++)
-                fprintf(in1, "%d %f %f ", im, x[d][i], vx[d][i]);
+                fprintf(in1, "%f ",x[d][i]);
+            for (int d = 1; d <= dim; d++)
+                fprintf(in1, "%f ",vx[d][i]);
+            fprintf(in1, "\n");
             fprintf(in2, "%d %f %f %f %f", im, mass[i], rho[i], p[i], u[i]);
             fprintf(in3, "%d %d %f", im, itype[i], hsml[i]);
         }
@@ -81,16 +85,18 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,floa
     }
     if ((itimestep%save_step)==0)
     {
-        in1 = fopen("xv_vp.dat", "w");
-        in2 = fopen("state_vp.da", "w");
-        in3 = fopen("other_vp.dat", "w");
+        in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/xv_vp.dat", "w");
+        in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/state_vp.dat", "w");
+        in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/other_vp.dat", "w");
 
         fprintf(in1, "%d\n", nvirt);
         for(int j=ntotal+1;j<=ntotal+nvirt;j++)
         {
-            fprintf(in1, "%d ", j);
+            fprintf(in1, "%d ", i);
             for (int d = 1; d <= dim; d++)
-                fprintf(in1, "%f %f", x[d][j], vx[d][j]);
+                fprintf(in1, "%f ",x[d][i]);
+            for (int d = 1; d <= dim; d++)
+                fprintf(in1, "%f ",vx[d][i]);
             fprintf(in1, "\n");
             fprintf(in2, "%d %f %f %f %f \n", j, mass[j], rho[j], p[j], u[j]);
             fprintf(in3, "%d %d %f \n", j, itype[j], hsml[j]);

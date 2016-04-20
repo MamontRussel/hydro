@@ -13,8 +13,10 @@ void output(float **x,float **vx,float *mass,float *rho,
     for( int i=1;i<=ntotal;i++)
     {
         fprintf(out1, "%d ", i);
-        for (int d = 1; d <= dim;d++)
-            fprintf(out1, "%f %f ",x[d][i], vx[d][i]);
+        for (int d = 1; d <= dim; d++)
+            fprintf(out1, "%f ",x[d][i]);
+        for (int d = 1; d <= dim; d++)
+            fprintf(out1, "%f ",vx[d][i]);
         fprintf(out1, "\n");
         fprintf(out2, "%d %f %f %f %f \n", i, mass[i], rho[i], p[i], u[i]);
         fprintf(out3, "%d %d %f \n", i,itype[i], hsml[i]);

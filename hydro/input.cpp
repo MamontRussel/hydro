@@ -22,8 +22,11 @@ void input(float **x, float **vx, float *mass, float *rho,
         cout << "**********************************************\n";
         for(int i=1;i<=ntotal;i++)
         {
+            fscanf(in1, "%d", &im);
             for (int d = 1; d <= dim; d++)
-                fscanf(in1, "%d %f %f ", &im, &x[d][i], &vx[d][i]);
+                fscanf(in1, "%f",&x[d][i]);
+            for (int d = 1; d <= dim; d++)
+                fscanf(in1, "%f",&vx[d][i]);
             fscanf(in2, "%d %f %f %f %f",&im, &mass[i], &rho[i],&p[i],&u[i]);
             fscanf(in3, "%d %d %f",&im, &itype[i], &hsml[i]);
         }
@@ -41,7 +44,9 @@ void input(float **x, float **vx, float *mass, float *rho,
         {
                 fprintf(in1, "%d ", i);
                 for (int d = 1; d <= dim; d++)
-                    fprintf(in1, "%f %f ", x[d][i], vx[d][i]);
+                    fprintf(in1, "%f ",x[d][i]);
+                for (int d = 1; d <= dim; d++)
+                    fprintf(in1, "%f ",vx[d][i]);
                 fprintf(in1, "\n");
                 fprintf(in2, "%d %f %f %f %f \n", i, mass[i], rho[i], p[i], u[i]);
                 fprintf(in3, "%d %d %f \n", i, itype[i], hsml[i]);
