@@ -245,30 +245,74 @@ void MainWindow::paintEvent(QPaintEvent *)
         pixIzo.fill(Qt::white);
         QPainter painter2(&pixIzo);
 
-//        double cx=(Lx)/(maxX-minX);
-//        double cy=(Ly-40)/(maxY-minY);
+        cx=(Lx)/(maxX-minX);
+        cy=(Ly)/(maxY-minY);
 
-//        for(int i=1;i<=1600;i++)
-//        {
+        double RabStrel[5][3],Strelka[5][3];
+        Strelka[1][1]=0;Strelka[1][2]=0;
+        Strelka[2][1]=100;Strelka[2][2]=0;
+        Strelka[3][1]=80;Strelka[3][2]=2;
+        Strelka[4][1]=-80;Strelka[4][2]=-2;
 
-//            double x_=x[1][i];
-//            double y_=x[2][i];
-//            double uc=10+(x_-minX)*cx;
-//            double vc=Ly-20-(y_-minY)*cy;
+        for(int i=1;i<=1600;i++)
+        {
 
-//            if(i%10==0)
-//            {
-//                painter.setPen(Qt::red);
-//                painter.setBrush(Qt::red);
-//            }
-//            else
-//            {
-//                painter.setPen(Qt::blue);
-//                painter.setBrush(Qt::blue);
-//            }
+            double xс=x[1][i];
+            double yс=x[2][i];
+            double uc=20+(xс-minX)*cx;
+            double vc=Ly-(yс-minY)*cy;
+            double rU=vx[1][i];
+            double rV=vx[2][i];
+            double Modul=sqrt(rU*rU+rV*rV);//!!!!!!!
+            double UGOL=atan2(rU,rV)/M_PI*180;
+            if(UGOL>360)
+                UGOL=UGOL-360;
 
-//            painter.drawEllipse(uc-4,vc-4,4,4);
-//        }
+            painter2.setPen(Qt::red);
+
+            //STRELA
+            double sa=UGOL*M_PI/180;
+            double rUU=Modul*cos(sa);
+            double rVV=Modul*sin(sa);
+            rUU=rUU*1000;rVV=rVV*1000;
+
+            //UV_ModulUGOL
+            double rModul=sqrt(rUU*rUU+rVV*rVV);
+            double rUGOL=atan2(rUU,rVV)*180/M_PI;
+            sa=rUGOL*M_PI/180;
+            double sm=rModul;
+            double a1=cos(sa);
+            double a2=sin(sa);
+            double a3=-a2;
+            double a4=a1;
+            RabStrel[1][1]=uc;
+            RabStrel[1][2]=vc;//Begin
+
+            double xr,yr;
+            for(int j=2;j<=4;j++)
+            {
+                double x_=Strelka[j][1];
+                double y_=Strelka[j][2];
+                if(j==2)
+                {
+                    xr=round(x_*sm);
+                }
+                else xr=round(Strelka[2][1]*sm-7);
+
+                yr=y_;
+                x_=round(a1*xr+a2*yr)+uc;
+                y_=round(a3*xr+a4*yr)+vc;
+                RabStrel[j][1]=x_;
+                RabStrel[j][2]=y_;
+            }
+
+            //draw arrow
+
+            painter2.drawLine(RabStrel[1][1],RabStrel[1][2],RabStrel[2][1],RabStrel[2][2]);
+            painter2.drawLine(RabStrel[3][1],RabStrel[3][2],RabStrel[2][1],RabStrel[2][2]);
+            painter2.drawLine(RabStrel[4][1],RabStrel[4][2],RabStrel[2][1],RabStrel[2][2]);
+
+        }
 
         ui.label_3->setPixmap(pixIzo);
     }
