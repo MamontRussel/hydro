@@ -32,6 +32,8 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void paintEvent(QPaintEvent *);
+    QPainter painter;
 
 private slots:
     void on_pushButton_clicked();
@@ -41,10 +43,10 @@ private slots:
 private:
     Ui::MainWindow ui;
     void drawPlots();
-    void drawIzolines();
     void init();
     float **x,**vx,*mass,*rho,*p,*u,*c,*s,*e,*hsml,dt;
     int ntotal, maxtimestep;
+    bool bResult;
     int *itype;
 };
 

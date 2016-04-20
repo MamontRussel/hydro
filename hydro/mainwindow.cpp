@@ -44,13 +44,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui.setupUi(this);
     ui.tabWidget_2->hide();
+    bResult=false;
 }
 
 void MainWindow::drawPlots()
 {
     if(dim==2)
     {
-        drawIzolines();
+        bResult=true;
         double rX,rY,minX=1000,minY=1000,maxX=-1000,maxY=-1000;
         QVector<double> x_,y_;
         for(int i=0;i<=41;i++)
@@ -187,10 +188,90 @@ void MainWindow::drawPlots()
     }
 }
 
-void MainWindow::drawIzolines()
+void MainWindow::paintEvent(QPaintEvent *)
 {
+    if(bResult)
+    {
+        //Точки
+        int Lx=ui.label_2->size().width();
+        int Ly=ui.label_2->size().height();
+        double minX=1e10,maxX=-1e10,minY=1e10,maxY=-1e10;
+
+        QPixmap pix(Lx,Ly);
+        pix.fill(Qt::white);
+        QPainter painter(&pix);
+
+        for(int i=1;i<=1600;i++)
+        {
+            if(x[1][i]>maxX)maxX=x[1][i];
+            if(x[1][i]<minX)minX=x[1][i];
+            if(x[2][i]>maxY)maxY=x[2][i];
+            if(x[2][i]<minY)minY=x[2][i];
+        }
+
+        double cx=(Lx)/(maxX-minX);
+        double cy=(Ly-40)/(maxY-minY);
+
+        for(int i=1;i<=1600;i++)
+        {
+
+            double x_=x[1][i];
+            double y_=x[2][i];
+            double uc=10+(x_-minX)*cx;
+            double vc=Ly-20-(y_-minY)*cy;
+
+            if(i%10==0)
+            {
+                painter.setPen(Qt::red);
+                painter.setBrush(Qt::red);
+            }
+            else
+            {
+                painter.setPen(Qt::blue);
+                painter.setBrush(Qt::blue);
+            }
+
+            painter.drawEllipse(uc-4,vc-4,4,4);
+        }
+
+        ui.label_2->setPixmap(pix);
 
 
+        //Изолинии
+        Lx=ui.label_3->size().width();
+        Ly=ui.label_3->size().height();
+
+        QPixmap pixIzo(Lx,Ly);
+        pixIzo.fill(Qt::white);
+        QPainter painter2(&pixIzo);
+
+//        double cx=(Lx)/(maxX-minX);
+//        double cy=(Ly-40)/(maxY-minY);
+
+//        for(int i=1;i<=1600;i++)
+//        {
+
+//            double x_=x[1][i];
+//            double y_=x[2][i];
+//            double uc=10+(x_-minX)*cx;
+//            double vc=Ly-20-(y_-minY)*cy;
+
+//            if(i%10==0)
+//            {
+//                painter.setPen(Qt::red);
+//                painter.setBrush(Qt::red);
+//            }
+//            else
+//            {
+//                painter.setPen(Qt::blue);
+//                painter.setBrush(Qt::blue);
+//            }
+
+//            painter.drawEllipse(uc-4,vc-4,4,4);
+//        }
+
+        ui.label_3->setPixmap(pixIzo);
+    }
 }
 
 void MainWindow::init()
@@ -234,6 +315,7 @@ void MainWindow::on_pushButton_clicked()
     if (shearcavity) dt = 5.e-5;
 
     input(x, vx, mass, rho, p, u, itype, hsml, ntotal);
+       // bResult=true;
     maxtimestep=ui.lineEdit->text().toInt();
     time_integration(x, vx, mass, rho, p, u,itype, hsml, ntotal, maxtimestep, dt);
     output(x, vx, mass, rho, p, u, itype, hsml, ntotal);
