@@ -35,14 +35,13 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
     void on_radioButton_2_clicked();
-
     void on_radioButton_clicked();
 
 private:
     Ui::MainWindow ui;
     void drawPlots();
+    void drawIzolines();
     void init();
     float **x,**vx,*mass,*rho,*p,*u,*c,*s,*e,*hsml,dt;
     int ntotal, maxtimestep;

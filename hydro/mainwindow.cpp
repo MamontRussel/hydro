@@ -50,62 +50,74 @@ void MainWindow::drawPlots()
 {
     if(dim==2)
     {
-        double min=10000,max=-10000,min1,max1,min2,max2,max3,min3;
-        min1=min2=min3=min;
-        max1=max2=max3=max;
-        ui.plot2_2->addGraph();
-        QVector<double> index(ntotal),v(ntotal),v2(ntotal);
-        for (int i=160; i<201; ++i)
+        drawIzolines();
+        double rX,rY,minX=1000,minY=1000,maxX=-1000,maxY=-1000;
+        QVector<double> x_,y_;
+        for(int i=0;i<=41;i++)
         {
-            index[i] = i;
-            v[i] = x[1][i];
-            if(x[1][i]>max)max=x[1][i];
-            if(x[1][i]<min)min=x[1][i];
-            v2[i] = x[2][i];
-            if(x[2][i]>max1)max1=x[2][i];
-            if(x[2][i]<min1)min1=x[2][i];
+            int k=30 + (i-1)*40;
+            if(i==0)
+            {
+                rX=0;
+                rY=0;
+            }
+            else if(i==41)
+            {
+                rX=0.001;
+                rY=0;
+            }
+            else
+            {
+                rX=x[1][k];
+                rY=vx[2][k];
+            }
+            if(rX<minX)minX=rX;
+            if(rX>maxX)maxX=rX;
+            if(rY<minY)minY=rY;
+            if(rY>maxY)maxY=rY;
+            x_.push_back(rX*1000);
+            y_.push_back(rY*1000);
         }
 
-
-        ui.plot2_2->graph(0)->setData(v, v2);
-        ui.plot2_2->xAxis->setRange(min,max);
-        ui.plot2_2->yAxis->setRange(min1,max1);
-        ui.plot2_2->replot();
-        ui.plot2_2->graph(0)->rescaleAxes(true);
-        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
-//        double min=10000,max=-10000,min1,max1,min2,max2,max3,min3;
-//        min1=min2=min3=min;
-//        max1=max2=max3=max;
-//        ui.plot1_2->addGraph();
-//        QVector<double> index(ntotal),v(ntotal);
-//        for (int i=200; i<241; ++i)
-//        {
-//            index[i] = i;
-//            v[i] = x[1][i];
-//            if(x[1][i]>max)max=x[1][i];
-//            if(x[1][i]<min)min=x[1][i];
-//        }
-//        ui.plot1_2->graph(0)->setData(index, v);
-//        ui.plot1_2->xAxis->setRange(200,241);
-//        ui.plot1_2->yAxis->setRange(min,max);
-//        ui.plot1_2->replot();
+        ui.plot1_2->addGraph();
+        ui.plot1_2->graph(0)->setData(x_, y_);
+        ui.plot1_2->xAxis->setRange(minX*1000,maxX*1000);
+        ui.plot1_2->yAxis->setRange(minY*1000,maxY*1000);
+        ui.plot1_2->replot();
 //        ui.plot1_2->graph(0)->rescaleAxes(true);
 //        ui.plot1_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
-//        ui.plot2_2->addGraph();
-//        QVector<double> v2(ntotal);
-//        for (int i=160; i<201; ++i)
-//        {
-//            v2[i] = x[2][i];
-//            if(x[2][i]>max1)max1=x[2][i];
-//            if(x[2][i]<min1)min1=x[2][i];
-//        }
-//        ui.plot2_2->graph(0)->setData(index, v2);
-//        ui.plot2_2->xAxis->setRange(160,201);
-//        ui.plot2_2->yAxis->setRange(min1,max1);
-//        ui.plot2_2->replot();
-//        ui.plot2_2->graph(0)->rescaleAxes(true);
-//        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
+        double minX2=1000,minY2=1000,maxX2=-1000,maxY2=-1000;
+        QVector<double> x_2,y_2;
+        for(int i=1;i<=41;i++)
+        {
+            if(i==41)
+            {
+                rX=0;
+                rY=0;
+            }
+            else
+            {
+                rX=x[2][i+800];
+                rY=vx[1][i+800];
+            }
+            if(rX<minX2)minX2=rX;
+            if(rX>maxX2)maxX2=rX;
+            if(rY<minY2)minY2=rY;
+            if(rY>maxY2)maxY2=rY;
+            x_2.push_back(rX*1000);
+            y_2.push_back(rY*1000);
+        }
+        qSort(y_2);
+        ui.plot2_2->addGraph();
+        ui.plot2_2->graph(0)->setData(y_2,x_2);
+        ui.plot2_2->xAxis->setRange(minX2*1000,maxX2*1000);
+        ui.plot2_2->yAxis->setRange(minY2*1000,maxY2*1000);
+        ui.plot2_2->replot();
+        ui.plot2_2->graph(0)->rescaleAxes(true);
+        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+
     }
     else
     {
@@ -173,6 +185,12 @@ void MainWindow::drawPlots()
     //    ui.plot4->graph(0)->rescaleAxes(true);
     //    ui.plot4->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
     }
+}
+
+void MainWindow::drawIzolines()
+{
+
+
 }
 
 void MainWindow::init()
