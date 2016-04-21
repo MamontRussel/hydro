@@ -110,14 +110,15 @@ void MainWindow::drawPlots()
             x_2.push_back(rX*1000);
             y_2.push_back(rY*1000);
         }
+        qSort(x_2);
         qSort(y_2);
         ui.plot2_2->addGraph();
         ui.plot2_2->graph(0)->setData(y_2,x_2);
-        ui.plot2_2->xAxis->setRange(minX2*1000,maxX2*1000);
-        ui.plot2_2->yAxis->setRange(minY2*1000,maxY2*1000);
+        ui.plot2_2->yAxis->setRange(minX2*1000,maxX2*1000);
+        ui.plot2_2->xAxis->setRange(minY2*1000,maxY2*1000);
         ui.plot2_2->replot();
-        ui.plot2_2->graph(0)->rescaleAxes(true);
-        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
+//        ui.plot2_2->graph(0)->rescaleAxes(true);
+//        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
     }
     else
@@ -236,7 +237,6 @@ void MainWindow::paintEvent(QPaintEvent *)
 
         ui.label_2->setPixmap(pix);
 
-
         //Изолинии
         Lx=ui.label_3->size().width();
         Ly=ui.label_3->size().height();
@@ -246,7 +246,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         QPainter painter2(&pixIzo);
 
         cx=(Lx)/(maxX-minX);
-        cy=(Ly)/(maxY-minY);
+        cy=(Ly-40)/(maxY-minY);
 
         double RabStrel[5][3],Strelka[5][3];
         Strelka[1][1]=0;Strelka[1][2]=0;
@@ -260,7 +260,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             double xс=x[1][i];
             double yс=x[2][i];
             double uc=20+(xс-minX)*cx;
-            double vc=Ly-(yс-minY)*cy;
+            double vc=Ly-20-(yс-minY)*cy;
             double rU=vx[1][i];
             double rV=vx[2][i];
             double Modul=sqrt(rU*rU+rV*rV);//!!!!!!!
@@ -268,7 +268,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             if(UGOL>360)
                 UGOL=UGOL-360;
 
-            painter2.setPen(Qt::red);
+            painter2.setPen(Qt::blue);
 
             //STRELA
             double sa=UGOL*M_PI/180;
