@@ -27,7 +27,7 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
                 dxiac[d] = x[d][i] - x[d][j];
                 driac = driac + dxiac[d]*dxiac[d];
             }
-            mhsml = (hsml[i]+hsml[j])/2;
+            mhsml = (hsml[i]+hsml[j])/2.;
             if (sqrt(driac)<scale_k*mhsml)
             {
                 if (niac<max_interaction)
@@ -72,7 +72,6 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
             minp = i;
         }
         if (countiac[i]==0) noiac++;
-        //cout << maxp<<endl;
     }
 
     if (itimestep % print_step==0)

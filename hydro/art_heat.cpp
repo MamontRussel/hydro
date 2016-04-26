@@ -16,6 +16,7 @@ void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,
         vcc[i] = 0.0;
         dedt[i] = 0.0;
     }
+
     for(int k=1;k<=niac;k++)
     {
         i = pair_i[k];
@@ -35,7 +36,7 @@ void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,
     {
         i = pair_i[k];
         j = pair_j[k];
-        mhsml= (hsml[i]+hsml[j])/2;
+        mhsml= (hsml[i]+hsml[j])/2.;
         mrho = 0.5e0*(rho[i] + rho[j]);
         rr = 0.e0;
         rdwdx = 0.e0;
@@ -45,12 +46,9 @@ void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,
             rr = rr + dx*dx;
             rdwdx = rdwdx + dx*dwdx[d][k];
         }
-        // mui=g1*hsml[i]*c[i] + g2*hsml[i]**2*(abs(vcc[i])-vcc[i]);
-        // muj=g1*hsml[j]*c[j] + g2*hsml[j]**2*(abs(vcc[j])-vcc[j]);
         mui=g1*hsml[i]*c[i] + g2*hsml[i]*hsml[i]*(fabs(vcc[i])-vcc[i]);//Посчитаем что это операция возведения в степень
         muj=g1*hsml[j]*c[j] + g2*hsml[j]*hsml[j]*(fabs(vcc[j])-vcc[j]);//только hsml. Т.к сама операция выполняется раньше других
         muij = 0.5*(mui+muj);
-        //h = muij/(mrho*(rr+0.01*mhsml**2))*rdwdx;
         h = muij/(mrho*(rr+0.01*mhsml*mhsml))*rdwdx;
         dedt[i] = dedt[i] + mass[j]*h*(u[i]-u[j]);
         dedt[j] = dedt[j] + mass[i]*h*(u[j]-u[i]);

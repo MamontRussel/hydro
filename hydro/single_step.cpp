@@ -5,7 +5,7 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
   float **dvx,float *du,float *drho,int *itype,float **av)
 {
 
-    int nvirt = 0, niac = 0;
+    int nvirt, niac = 0;
     int *pair_i = new int[max_interaction];
     int *pair_j = new int[max_interaction];
     int *ns = new int[maxn];
@@ -42,9 +42,9 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
         ahdudt[i] = 0.;
         for(int d=1;d<=dim;d++)
         {
-            indvxdt[d][i] = 0;
-            ardvxdt[d][i] = 0;
-            exdvxdt[d][i] = 0;
+            indvxdt[d][i] = 0.;
+            ardvxdt[d][i] = 0.;
+            exdvxdt[d][i] = 0.;
         }
     }
 
@@ -55,9 +55,6 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
     //Interaction parameters, calculating neighboring particles
     //and optimzing smoothing length
     if (nnps==1)direct_find(itimestep, ntotal + nvirt, hsml,x,niac, pair_i,pair_j,w,dwdx,ns);
-    // Б ДЮММНИ БЕПЯХХ МЕ ОНДДЕПФХБЮЕРЯЪ
-    //else if (nnps==2)link_list(itimestep, ntotal+nvirt,hsml[1],x,niac,pair_i,pair_j,w,dwdx,ns);
-    //else if (nnps==3)tree_search(itimestep, ntotal+nvirt,hsml,x,niac,pair_i,pair_j,w,dwdx,ns);
 
     //Density approximation or change rate
     if (summation_density)sum_density(ntotal+nvirt,hsml,mass,niac,pair_i,pair_j,w,rho);
@@ -91,6 +88,7 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
 
         du[i] = du[i] + avdudt[i] + ahdudt[i];
     }
+
     if ((itimestep % print_step)==0)
     {
         cout<<"\n**** Information for particle **** "<<moni_particle<<endl;

@@ -16,7 +16,7 @@ void input(float **x, float **vx, float *mass, float *rho,
         in3 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/f_other.dat", "r");
 
         cout << "**********************************************\n";
-        cout << "Loading initial particle configuration...\n";
+        cout << "Loading initifal particle configuration...\n";
         fscanf(in1, "%d", &ntotal);
         cout << "Total number of particles " << ntotal << endl;
         cout << "**********************************************\n";

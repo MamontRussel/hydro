@@ -29,14 +29,14 @@ void time_integration(float **x, float **vx, float *mass,
           v_min[i][j] = (float)NULL;
           dx[i][j] = (float)NULL;
           dvx[i][j] = (float)NULL;
-          av[i][j] = (float)NULL;;
+          av[i][j] = (float)NULL;
       }
   }
 
   for(int i=1;i<=ntotal;i++)
     for(int d=1;d<=dim;d++)
     {
-      av[d][i] = 0;
+      av[d][i] = 0.;
     }
 
   for (itimestep = nstart+1;itimestep<=nstart+maxtimestep;itimestep++)
@@ -56,14 +56,14 @@ void time_integration(float **x, float **vx, float *mass,
       for(int i=1;i<=ntotal;i++)
       {
         u_min[i] = u[i];
-        temp_u=0;
+        temp_u=0.;
         if (dim==1)temp_u= -nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
         u[i]= u[i] + (dt/2.)* (du[i]+temp_u);
-        if(u[i]<0) u[i] = 0;
+        if(u[i]<0) u[i] = 0.;
         if (!summation_density)
         {
           rho_min[i] = rho[i];
-          temp_rho=0;
+          temp_rho=0.;
           if (dim==1)temp_rho= -nsym*rho[i]*vx[1][i]/x[1][i];
           rho[i] = rho[i] +(dt/2.)*(drho[i]+ temp_rho);
         }
@@ -82,7 +82,7 @@ void time_integration(float **x, float **vx, float *mass,
     {
       for(int i=1;i<=ntotal;i++)
       {
-        temp_u=0;
+        temp_u=0.;
         if (dim==1) temp_u=-nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
         u[i] = u[i] + (dt/2.)*(du[i] + temp_u);
         if(u[i]<0) u[i] = 0;
@@ -106,7 +106,7 @@ void time_integration(float **x, float **vx, float *mass,
         temp_u=0;
         if (dim==1) temp_u=-nsym*p[i]*vx[1][i]/x[1][i]/rho[i];
         u[i] = u_min[i] + dt*(du[i]+temp_u);
-        if(u[i]<0) u[i] = 0;
+        if(u[i]<0) u[i] = 0.;
 
         if (!summation_density )
         {

@@ -14,7 +14,8 @@ void sum_density(int ntotal, float *hsml, float *mass, int niac, int *pair_i,int
 
     // Self density of each particle: Wii (Kernel for distance 0)
     // and take contribution of particle itself:
-    r = 0;
+    r = 0.;
+
     // Firstly calculate the integration of the kernel over the space
     for(i=1;i<=ntotal;i++)
     {
@@ -61,8 +62,9 @@ void con_density(int ntotal,float *mass,int niac,int *pair_i,int *pair_j,float *
     int i,j;
     float vcc;
     float *dvx = new float[dim+1];
+
     for(i=1;i<=ntotal;i++)
-        drhodt[i] = 0;
+        drhodt[i] = 0.;
 
     for(int k=1;k<=niac;k++)
     {

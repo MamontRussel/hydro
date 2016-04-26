@@ -20,12 +20,13 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
             dvxdt[d][i] = 0.e0;
         dedt[i] = 0.e0;
     }
+
     //Calculate SPH sum for artificial viscosity
     for(int k=1;k<=niac;k++)
     {
         i = pair_i[k];
         j = pair_j[k];
-        mhsml= (hsml[i]+hsml[j])/2;
+        mhsml= (hsml[i]+hsml[j])/2.;
         vr = 0.e0;
         rr = 0.e0;
         for(int d=1;d<=dim;d++)
@@ -35,6 +36,7 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
             vr = vr + dvx[d]*dx;
             rr = rr + dx*dx;
         }
+
         //Artificial viscous force only if v_ij * r_ij < 0
         if (vr<0.e0)
         {
@@ -44,6 +46,7 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
             mc = 0.5*(c[i] + c[j]);
             mrho = 0.5*(rho[i] + rho[j]);
             piv = (beta*muv - alpha*mc)*muv/mrho;
+
             //Calculate SPH sum for artificial viscous force
             for(int d=1;d<=dim;d++)
             {
@@ -55,6 +58,7 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
             }
         }
     }
+
     //Change of specific internal energy:
     for(i=1;i<=ntotal;i++)
         dedt[i] = 0.5*dedt[i];

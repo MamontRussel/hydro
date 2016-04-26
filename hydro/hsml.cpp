@@ -41,7 +41,7 @@ void h_upgrade(float &dt,int ntotal,float *mass,float **vx,float *rho,int &niac,
     {
         fac = 2.0;
         for(i=1;i<=ntotal;i++)
-            hsml[i] = fac * pow(mass[i]/rho[i],1/dim);
+            hsml[i] = fac * pow(mass[i]/rho[i],1./dim);
     }
 
     delete dvx;

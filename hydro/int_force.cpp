@@ -60,9 +60,9 @@ void int_force(int ntotal, float *mass,
                 hyz = dvx[2] * dwdx[3][k] + dvx[3] * dwdx[2][k];
                 hzz = 2.e0 * dvx[3] * dwdx[3][k] - dvx[1] * dwdx[1][k] - dvx[2] * dwdx[2][k];
             }
-            /*hxx = 2. / 3. * hxx;
-            hyy = 2. / 3. * hyy;
-            hzz = 2. / 3. * hzz;*/
+//            hxx = 2 / 3 * hxx;
+//            hyy = 2 / 3 * hyy;
+//            hzz = 2 / 3 * hzz;
             if (dim == 1)
             {
                 hxx = 2. / 3. * hxx;
@@ -115,9 +115,9 @@ void int_force(int ntotal, float *mass,
         {
             if (dim == 1)tdsdt[i] = txx[i] * txx[i];
             else if (dim == 2)
-                tdsdt[i] = txx[i] * txx[i] + 2 * txy[i] * txy[i] + tyy[i] * tyy[i];
+                tdsdt[i] = txx[i] * txx[i] + 2. * txy[i] * txy[i] + tyy[i] * tyy[i];
             else if (dim == 3)
-                tdsdt[i] = txx[i] * txx[i] + 2 * txy[i] * txy[i] + 2 * txz[i] * txz[i]
+                tdsdt[i] = txx[i] * txx[i] + 2. * txy[i] * txy[i] + 2. * txz[i] * txz[i]
                 + tyy[i] * tyy[i] + 2.e0*tyz[i] * tyz[i] + tzz[i] * tzz[i];
             tdsdt[i] = 0.5*eta[i] / rho[i] * tdsdt[i];
         }
@@ -134,10 +134,10 @@ void int_force(int ntotal, float *mass,
     {
         i = pair_i[k];
         j = pair_j[k];
-        he = 0;
+        he = 0.;
 
         // For SPH algorithm 1
-        rhoij = 1 / (rho[i] * rho[j]);
+        rhoij = 1. / (rho[i] * rho[j]);
         if (pa_sph == 1)
         {
             for (int d = 1; d <= dim; d++)
