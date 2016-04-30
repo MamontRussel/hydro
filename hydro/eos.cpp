@@ -16,7 +16,7 @@ void p_art_water(float rho,float &p,float &c)
 //    gamma = 7;
 //    rho0 = 1000;
 //    b = 1.013e5;
-//    p = b*((rho/rho0)*(rho/rho0)*(rho/rho0)*(rho/rho0)*(rho/rho0)*(rho/rho0)*(rho/rho0)-1);
+//    p = b*(powf(rho/rho0,gamma)-1);
 //    c = 1480;
 
     //  Artificial EOS, Form 2 (Morris, 1997)

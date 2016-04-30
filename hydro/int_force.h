@@ -35,7 +35,7 @@
 // dedt : Change of specific internal energy [out]
 
 void int_force(int ntotal, float *mass,
-    float **vx, int &niac, float *rho, float *eta, int *pair_i, int *pair_j, float **dwdx,
+    float **vx, int niac, float *rho, float *eta, int *pair_i, int *pair_j, float **dwdx,
     float *u, int *itype, float *c, float *p, float **dvxdt, float *tdsdt,
     float *dedt);
 

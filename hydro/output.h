@@ -2,6 +2,7 @@
 #define OUTPUT_H
 
 #include <cstdio>
+#include <QCoreApplication>
 #include "modul.h"
 
 // Function for saving particle information to external disk file

@@ -1,7 +1,7 @@
 #include "art_heat.h"
 
-void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,float *rho,
-    float *u,float *c,int *pair_i,int *pair_j,float **dwdx,float *dedt)
+void art_heat(int ntotal, float *hsml, float *mass, float **x, float **vx, int niac, float *rho,
+    float *u, float *c, int *pair_i, int *pair_j, float **dwdx, float *dedt)
 {
     int i,j;
     float dx, rr, h, mrho, mhsml, hvcc, mui, muj, muij, rdwdx, g1, g2;
@@ -13,8 +13,8 @@ void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,
     g2=1.0;
     for(i=1;i<=ntotal;i++)
     {
-        vcc[i] = 0.0;
-        dedt[i] = 0.0;
+        vcc[i] = 0.e0;
+        dedt[i] = 0.e0;
     }
 
     for(int k=1;k<=niac;k++)
@@ -57,7 +57,7 @@ void art_heat(int ntotal,float *hsml,float *mass,float **x,float **vx,int &niac,
     for(i=1;i<=ntotal;i++)
         dedt[i] = 2.0e0*dedt[i];
 
-    delete dvx;
-    delete vcc;
+    delete[] dvx;
+    delete[] vcc;
 }
 

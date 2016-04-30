@@ -1,8 +1,8 @@
 #include "single_step.h"
 
-void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mass,
-  float **x,float **vx,float *u,float *rho,float *p,float *tdsdt,
-  float **dvx,float *du,float *drho,int *itype,float **av)
+void single_step(int itimestep, float &dt, int ntotal, float *hsml, float *mass,
+  float **x, float **vx, float *u, float *rho, float *p, float *tdsdt,
+  float **dvx, float *du, float *drho, int *itype, float **av)
 {
 
     int nvirt, niac = 0;
@@ -48,36 +48,37 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
         }
     }
 
-    //Positions of virtual (boundary) particles:
+    //Positions of virtual (boundary) particles: 2D+
     nvirt = 0;
     if (virtual_part)virt_part(itimestep, ntotal,nvirt,hsml,mass,x,vx,rho,u,p,itype);
 
     //Interaction parameters, calculating neighboring particles
-    //and optimzing smoothing length
+    //and optimzing smoothing length 2D+
     if (nnps==1)direct_find(itimestep, ntotal + nvirt, hsml,x,niac, pair_i,pair_j,w,dwdx,ns);
 
-    //Density approximation or change rate
+    //Density approximation or change rate 2D+
     if (summation_density)sum_density(ntotal+nvirt,hsml,mass,niac,pair_i,pair_j,w,rho);
     else con_density(ntotal+nvirt,mass,niac,pair_i,pair_j,dwdx,vx,drho);
 
-    //Dynamic viscosity:
+    //Dynamic viscosity: 2D+
     if (visc)viscosity(ntotal+nvirt,itype,eta);
 
-    //Internal forces:
+    //Internal forces: 2D+
     int_force(ntotal+nvirt,mass,vx,niac,rho,eta,pair_i,pair_j,dwdx,
         u,itype,c,p,indvxdt,tdsdt,du);
 
     //Artificial viscosity:
     if (visc_artificial)art_visc(ntotal+nvirt,hsml,mass,x,vx,niac,rho,c,pair_i,pair_j,dwdx,ardvxdt, avdudt);
 
-    //External forces:
+    //External forces: 2D+
     if (ex_force)ext_force(ntotal+nvirt,x,niac,pair_i,pair_j,itype,exdvxdt);
+    //ext_force(ntotal+nvirt,mass,x,niac,pair_i,pair_j,itype,hsml,exdvxdt);
 
     //Calculating the neighboring particles and undating HSML
     if (sle!=0)h_upgrade(dt,ntotal, mass, vx, rho, niac,pair_i, pair_j, dwdx, hsml);
     if (heat_artificial)art_heat(ntotal+nvirt,hsml,mass,x,vx,niac,rho,u, c,pair_i,pair_j,dwdx,ahdudt);
 
-    //Calculating average velocity of each partile for avoiding penetration
+    //Calculating average velocity of each partile for avoiding penetration 2D
     if (average_velocity)av_vel(ntotal,mass,niac,pair_i,pair_j, w, vx, rho, av);
 
     //Convert velocity, force, and energy to f and dfdt
@@ -96,24 +97,24 @@ void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mas
             "\nexternal a=" << exdvxdt[1][moni_particle]<< " total a="<<dvx[1][moni_particle]<<endl;
     }
 
-    delete pair_i;
-    delete pair_j;
-    delete ns;
-    delete w;
+    delete[] pair_i;
+    delete[] pair_j;
+    delete[] ns;
+    delete[] w;
     for (int i = 0; i <= dim; i++)
         delete dwdx[i];
-    delete dwdx;
+    delete[] dwdx;
     for (int i = 0; i <= dim; i++)
         delete indvxdt[i];
-    delete indvxdt;
+    delete[] indvxdt;
     for (int i = 0; i <= dim; i++)
         delete exdvxdt[i];
-    delete exdvxdt;
+    delete[] exdvxdt;
     for (int i = 0; i <= dim; i++)
         delete ardvxdt[i];
-    delete ardvxdt;
-    delete avdudt;
-    delete ahdudt;
-    delete c;
-    delete eta;
+    delete[] ardvxdt;
+    delete[] avdudt;
+    delete[] ahdudt;
+    delete[] c;
+    delete[] eta;
 }

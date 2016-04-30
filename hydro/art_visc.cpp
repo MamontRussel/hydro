@@ -6,6 +6,7 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
     int i,j;
     float dx,piv,muv, vr, rr, h, mc, mrho, mhsml;
     float *dvx = new float[dim+1];
+
     // Parameter for the artificial viscosity:
     // Shear viscosity
     const int alpha = 1.e0;
@@ -43,8 +44,8 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
             //Calculate muv_ij = hsml v_lj * r_ij / ( r_ij"2 + hsml~2 etq~2 )
             muv = mhsml*vr/(rr + mhsml*mhsml*etq*etq);
             //Calculate PIv_ij = (-alpha muv_ij c_ij + beta muv_ij~2) / rho_ij
-            mc = 0.5*(c[i] + c[j]);
-            mrho = 0.5*(rho[i] + rho[j]);
+            mc = 0.5e0*(c[i] + c[j]);
+            mrho = 0.5e0*(rho[i] + rho[j]);
             piv = (beta*muv - alpha*mc)*muv/mrho;
 
             //Calculate SPH sum for artificial viscous force
@@ -61,7 +62,7 @@ void art_visc(int ntotal,float *hsml,float *mass,float **x,float **vx,int niac,f
 
     //Change of specific internal energy:
     for(i=1;i<=ntotal;i++)
-        dedt[i] = 0.5*dedt[i];
+        dedt[i] = 0.5e0*dedt[i];
 
-    delete dvx;
+    delete[] dvx;
 }

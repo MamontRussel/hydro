@@ -1,7 +1,7 @@
 #include "int_force.h"
 
 void int_force(int ntotal, float *mass,
-    float **vx, int &niac, float *rho, float *eta, int *pair_i, int *pair_j, float **dwdx,
+    float **vx, int niac, float *rho, float *eta, int *pair_i, int *pair_j, float **dwdx,
     float *u, int *itype, float *c, float *p, float **dvxdt, float *tdsdt,
     float *dedt)
 {
@@ -20,15 +20,15 @@ void int_force(int ntotal, float *mass,
     // 	viscous energy, internal energy, acceleration
     for (i = 1; i <= ntotal; i++)
     {
-        txx[i] = 0;
-        tyy[i] = 0;
-        tzz[i] = 0;
-        txy[i] = 0;
-        txz[i] = 0;
-        tyz[i] = 0;
-        vcc[i] = 0;
-        tdsdt[i] = 0;
-        dedt[i] = 0;
+        txx[i] = 0.e0;
+        tyy[i] = 0.e0;
+        tzz[i] = 0.e0;
+        txy[i] = 0.e0;
+        txz[i] = 0.e0;
+        tyz[i] = 0.e0;
+        vcc[i] = 0.e0;
+        tdsdt[i] = 0.e0;
+        dedt[i] = 0.e0;
         for (int d = 1; d <= dim; d++)
             dvxdt[d][i] = 0.e0;
     }
@@ -46,7 +46,7 @@ void int_force(int ntotal, float *mass,
             if (dim == 1) hxx = 2 * dvx[1] * dwdx[1][k];
             else  if (dim == 2)
             {
-                hxx = 2 * dvx[1] * dwdx[1][k] - dvx[2] * dwdx[2][k];
+                hxx = 2.e0 * dvx[1] * dwdx[1][k] - dvx[2] * dwdx[2][k];
                 hxy = dvx[1] * dwdx[2][k] + dvx[2] * dwdx[1][k];
                 hyy = 2.e0*dvx[2] * dwdx[2][k] - dvx[1] * dwdx[1][k];
             }
@@ -65,14 +65,14 @@ void int_force(int ntotal, float *mass,
 //            hzz = 2 / 3 * hzz;
             if (dim == 1)
             {
-                hxx = 2. / 3. * hxx;
+                hxx = 2.e0 / 3. * hxx;
                 txx[i] = txx[i] + mass[j] * hxx / rho[j];
                 txx[j] = txx[j] + mass[i] * hxx / rho[i];
             }
             else if (dim == 2)
             {
-                hxx = 2. / 3. * hxx;
-                hyy = 2. / 3. * hyy;
+                hxx = 2.e0 / 3. * hxx;
+                hyy = 2.e0 / 3. * hyy;
                 txx[i] = txx[i] + mass[j] * hxx / rho[j];
                 txx[j] = txx[j] + mass[i] * hxx / rho[i];
                 txy[i] = txy[i] + mass[j] * hxy / rho[j];
@@ -82,9 +82,9 @@ void int_force(int ntotal, float *mass,
             }
             else if (dim == 3)
             {
-                hxx = 2. / 3. * hxx;
-                hyy = 2. / 3. * hyy;
-                hzz = 2. / 3. * hzz;
+                hxx = 2.e0 / 3. * hxx;
+                hyy = 2.e0 / 3. * hyy;
+                hzz = 2.e0 / 3. * hzz;
                 txx[i] = txx[i] + mass[j] * hxx / rho[j];
                 txx[j] = txx[j] + mass[i] * hxx / rho[i];
                 txy[i] = txy[i] + mass[j] * hxy / rho[j];
@@ -115,11 +115,11 @@ void int_force(int ntotal, float *mass,
         {
             if (dim == 1)tdsdt[i] = txx[i] * txx[i];
             else if (dim == 2)
-                tdsdt[i] = txx[i] * txx[i] + 2. * txy[i] * txy[i] + tyy[i] * tyy[i];
+                tdsdt[i] = txx[i] * txx[i] + 2.e0 * txy[i] * txy[i] + tyy[i] * tyy[i];
             else if (dim == 3)
-                tdsdt[i] = txx[i] * txx[i] + 2. * txy[i] * txy[i] + 2. * txz[i] * txz[i]
+                tdsdt[i] = txx[i] * txx[i] + 2.e0 * txy[i] * txy[i] + 2. * txz[i] * txz[i]
                 + tyy[i] * tyy[i] + 2.e0*tyz[i] * tyz[i] + tzz[i] * tzz[i];
-            tdsdt[i] = 0.5*eta[i] / rho[i] * tdsdt[i];
+            tdsdt[i] = 0.5e0*eta[i] / rho[i] * tdsdt[i];
         }
 
         // Pressure from equation of state
@@ -137,7 +137,7 @@ void int_force(int ntotal, float *mass,
         he = 0.;
 
         // For SPH algorithm 1
-        rhoij = 1. / (rho[i] * rho[j]);
+        rhoij = 1.e0 / (rho[i] * rho[j]);
         if (pa_sph == 1)
         {
             for (int d = 1; d <= dim; d++)
@@ -229,14 +229,14 @@ void int_force(int ntotal, float *mass,
     // Change of specific internal energy de/dt = T ds/dt - p/rho vc,c:
 
     for (i = 1; i <= ntotal; i++)
-        dedt[i] = tdsdt[i] + 0.5*dedt[i];
+        dedt[i] = tdsdt[i] + 0.5e0*dedt[i];
 
-    delete dvx;
-    delete txx;
-    delete tyy;
-    delete tzz;
-    delete txy;
-    delete txz;
-    delete tyz;
-    delete vcc;
+    delete[] dvx;
+    delete[] txx;
+    delete[] tyy;
+    delete[] tzz;
+    delete[] txy;
+    delete[] txz;
+    delete[] tyz;
+    delete[] vcc;
 }

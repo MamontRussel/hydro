@@ -1,6 +1,7 @@
 #ifndef TIME_INTEGRATION_H
 #define TIME_INTEGRATION_H
 
+#include <QCoreApplication>
 #include "single_step.h"
 #include "output.h"
 
@@ -25,6 +26,6 @@ using namespace std;
 // dt-- timestep
 
 void time_integration(float **x, float **vx, float *mass,
-  float *rho,float *p,float *u,int *itype,float *hsml,int &ntotal,int &maxtimestep,float &dt );
+  float *rho,float *p,float *u,int *itype,float *hsml,int &ntotal,int &maxtimestep,float &dt);
 
 #endif

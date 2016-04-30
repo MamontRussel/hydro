@@ -32,5 +32,5 @@ void av_vel(int ntotal,float *mass,int &niac,int *pair_i,int *pair_j,float *w,fl
         for(int d=1;d<=dim;d++)
             av[d][i] = epsilon * av[d][i];
 
-    delete dvx;
+    delete[] dvx;
 }

@@ -1,7 +1,7 @@
 #include "hsml.h"
 
-void h_upgrade(float &dt,int ntotal,float *mass,float **vx,float *rho,int &niac,int *pair_i,
-    int *pair_j,float **dwdx,float *hsml)
+void h_upgrade(float dt, int ntotal, float *mass, float **vx, float *rho, int niac, int *pair_i,
+    int *pair_j, float **dwdx, float *hsml)
 {
     int i, j;
     float fac, hvcc;
@@ -9,7 +9,7 @@ void h_upgrade(float &dt,int ntotal,float *mass,float **vx,float *rho,int &niac,
     float *vcc = new float[maxn];
     float *dhsml = new float[maxn];
 
-    if (sle==0 )//Keep smoothing length unchanged.
+    if (sle==0 )//Keep smoothing length unchanged. 2D
         return;
     else if (sle==2)
     {
@@ -44,7 +44,7 @@ void h_upgrade(float &dt,int ntotal,float *mass,float **vx,float *rho,int &niac,
             hsml[i] = fac * pow(mass[i]/rho[i],1./dim);
     }
 
-    delete dvx;
-    delete vcc;
-    delete dhsml;
+    delete[] dvx;
+    delete[] vcc;
+    delete[] dhsml;
 }

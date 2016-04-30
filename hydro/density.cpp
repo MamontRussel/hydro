@@ -52,8 +52,8 @@ void sum_density(int ntotal, float *hsml, float *mass, int niac, int *pair_i,int
         for(i=1;i<=ntotal;i++)
             rho[i]=rho[i]/wi[i];
 
-    delete hv;
-    delete wi;
+    delete[] hv;
+    delete[] wi;
 }
 
 void con_density(int ntotal,float *mass,int niac,int *pair_i,int *pair_j,float **dwdx,
@@ -81,5 +81,5 @@ void con_density(int ntotal,float *mass,int niac,int *pair_i,int *pair_j,float *
         drhodt[j] = drhodt[j] + mass[i]*vcc;
     }
 
-    delete dvx;
+    delete[] dvx;
 }

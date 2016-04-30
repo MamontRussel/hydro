@@ -1,6 +1,6 @@
 #include "ext_force.h"
 
-void ext_force(int ntotal,float **x,int &niac,int *pair_i,int *pair_j,int *itype,float **dvxdt)
+void ext_force(int ntotal,float **x,int niac,int *pair_i,int *pair_j,int *itype,float **dvxdt)
 {
     int i, j;
     float *dx = new float[dim+1];
@@ -43,5 +43,5 @@ void ext_force(int ntotal,float **x,int &niac,int *pair_i,int *pair_j,int *itype
         }
     }
 
-    delete dx;
+    delete[] dx;
 }

@@ -1,4 +1,5 @@
 #include "direct_find.h"
+#include <QDebug>
 
 void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int *pair_i,
     int *pair_j,float *w,float **dwdx,int *countiac)
@@ -27,7 +28,7 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
                 dxiac[d] = x[d][i] - x[d][j];
                 driac = driac + dxiac[d]*dxiac[d];
             }
-            mhsml = (hsml[i]+hsml[j])/2.;
+            mhsml = (float)(hsml[i]+hsml[j])/2.;
             if (sqrt(driac)<scale_k*mhsml)
             {
                 if (niac<max_interaction)
@@ -58,6 +59,7 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
     maxiac = 0;
     miniac = 1000;
     noiac = 0;
+
     for(int i=1;i<=ntotal;i++)
     {
         sumiac = sumiac + countiac[i];
@@ -87,6 +89,6 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
         }
     }
 
-    delete dxiac;
-    delete tdwdx;
+    delete[] dxiac;
+    delete[] tdwdx;
 }

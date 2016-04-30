@@ -36,7 +36,7 @@
 // itype Type of particle [in]
 // av Monaghan average velocity [out]
 
-void single_step(int &itimestep, float &dt, int &ntotal, float *hsml, float *mass,
+void single_step(int itimestep, float &dt, int ntotal, float *hsml, float *mass,
   float **x,float **vx,float *u,float *rho,float *p,float *tdsdt,
   float **dvx,float *du,float *drho,int *itype,float **av);
 

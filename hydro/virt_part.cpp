@@ -1,7 +1,7 @@
 #include "virt_part.h"
 
-void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,float **x,
-    float **vx,float *rho,float *u,float *p,int *itype)
+void virt_part(int itimestep, int ntotal, int &nvirt, float *hsml, float *mass, float **x,
+    float **vx, float *rho, float *u, float *p, int *itype)
 {
     FILE *in1, *in2, *in3;
     int i,im=0, mp;
@@ -95,11 +95,11 @@ void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,floa
         fprintf(in1, "%d\n", nvirt);
         for(int j=ntotal+1;j<=ntotal+nvirt;j++)
         {
-            fprintf(in1, "%d ", i);
+            fprintf(in1, "%d ", j);
             for (int d = 1; d <= dim; d++)
-                fprintf(in1, "%f ",x[d][i]);
+                fprintf(in1, "%f ",x[d][j]);
             for (int d = 1; d <= dim; d++)
-                fprintf(in1, "%f ",vx[d][i]);
+                fprintf(in1, "%f ",vx[d][j]);
             fprintf(in1, "\n");
             fprintf(in2, "%d %f %f %f %f \n", j, mass[j], rho[j], p[j], u[j]);
             fprintf(in3, "%d %d %f \n", j, itype[j], hsml[j]);

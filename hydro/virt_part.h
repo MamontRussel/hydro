@@ -19,7 +19,7 @@ using namespace std;
 // u internal energy
 // itype: type of particles
 
-void virt_part(int &itimestep,int ntotal,int &nvirt,float *hsml,float *mass,float **x,
+void virt_part(int itimestep,int ntotal,int &nvirt,float *hsml,float *mass,float **x,
     float **vx,float *rho,float *u,float *p,int *itype);
 
 #endif

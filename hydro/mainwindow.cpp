@@ -45,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.setupUi(this);
     ui.tabWidget_2->hide();
     bResult=false;
+
+    //QTimer *timer = new QTimer(this);
+    //connect(timer, SIGNAL(timeout()), this, SLOT(repaint()));
+    //timer->start(1000);
 }
 
 void MainWindow::drawPlots()
@@ -318,6 +322,11 @@ void MainWindow::paintEvent(QPaintEvent *)
     }
 }
 
+void MainWindow::updateBar()
+{
+    ui.progressBar->setValue(50);
+}
+
 void MainWindow::init()
 {
     itype = new int[maxn];
@@ -359,12 +368,10 @@ void MainWindow::on_pushButton_clicked()
     if (shearcavity) dt = 5.e-5;
 
     input(x, vx, mass, rho, p, u, itype, hsml, ntotal);
-       // bResult=true;
     maxtimestep=ui.lineEdit->text().toInt();
     time_integration(x, vx, mass, rho, p, u,itype, hsml, ntotal, maxtimestep, dt);
     output(x, vx, mass, rho, p, u, itype, hsml, ntotal);
     drawPlots();
-    ui.progressBar->setValue(100);
 
     delete itype;
     delete mass;

@@ -3,6 +3,7 @@
 
 #include "ui_mainwindow.h"
 #include <iostream>
+#include <QTimer>
 #include "modul.h"
 #include "input.h"
 #include "output.h"
@@ -34,7 +35,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
     QPainter painter;
-
+public slots:
+    void updateBar();
 private slots:
     void on_pushButton_clicked();
     void on_radioButton_2_clicked();

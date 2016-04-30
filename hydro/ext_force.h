@@ -17,6 +17,6 @@
 //  hsml : Smoothing Length [in]
 //  dvxdt : Acceleration with respect to x, y and z [out]
 
-void ext_force(int ntotal,float **x,int &niac,int *pair_i,int *pair_j,int *itype,float **dvxdt);
+void ext_force(int ntotal,float **x,int niac,int *pair_i,int *pair_j,int *itype,float **dvxdt);
 
 #endif
