@@ -7,7 +7,7 @@ void virt_part(int itimestep, int ntotal, int &nvirt, float *hsml, float *mass, 
     int i,im=0, mp;
     float x1, dx, v_inf;
 
-    if (vp_input)
+    if (vp_input)//FALSE
     {
         in1 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/xv_vp.dat", "r");
         in2 = fopen("/Users/Mamont/Documents/GitHub/hydro/hydro/data/state_vp.dat", "r");

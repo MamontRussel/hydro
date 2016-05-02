@@ -9,7 +9,7 @@
 extern int dim;
 //	maxn : Maximum number of particles
 //	max_interation : Maximum number of interaction pairs
-const int maxn=12000, max_interaction = 100*maxn;
+const int maxn=12000, max_interaction = 100 * maxn;
 
 // Parameters for the computational geometry,
 // x_maxgeom : Upper limit of allowed x-regime

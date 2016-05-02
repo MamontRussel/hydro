@@ -421,7 +421,7 @@ void MainWindow::on_radioButton_clicked()
     nor_density=true;
     shocktube=false;
     shearcavity=true;
-    ui.lineEdit->setText("1000");
+    ui.lineEdit->setText("3000");
     ui.tabWidget->hide();
     ui.tabWidget_2->show();
 }

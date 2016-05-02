@@ -28,7 +28,7 @@ void direct_find(int itimestep, int ntotal, float *hsml, float **x,int &niac,int
                 dxiac[d] = x[d][i] - x[d][j];
                 driac = driac + dxiac[d]*dxiac[d];
             }
-            mhsml = (float)(hsml[i]+hsml[j])/2.;
+            mhsml = (hsml[i]+hsml[j])/2.;
             if (sqrt(driac)<scale_k*mhsml)
             {
                 if (niac<max_interaction)

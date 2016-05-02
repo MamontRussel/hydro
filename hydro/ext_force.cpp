@@ -36,7 +36,7 @@ void ext_force(int ntotal,float **x,int niac,int *pair_i,int *pair_j,int *itype,
             rr = sqrt(rr);
             if(rr<rr0)
             {
-                f = (pow(rr0/rr,p1)-(pow(rr0/rr,p2)))/rr*rr;
+                f = (powf(rr0/rr,p1)-(powf(rr0/rr,p2)))/rr*rr;
                 for(int d=1;d<=dim;d++)
                     dvxdt[d][i] = dvxdt[d][i] + dd*dx[d]*f;
             }

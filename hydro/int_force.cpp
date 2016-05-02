@@ -60,9 +60,6 @@ void int_force(int ntotal, float *mass,
                 hyz = dvx[2] * dwdx[3][k] + dvx[3] * dwdx[2][k];
                 hzz = 2.e0 * dvx[3] * dwdx[3][k] - dvx[1] * dwdx[1][k] - dvx[2] * dwdx[2][k];
             }
-//            hxx = 2 / 3 * hxx;
-//            hyy = 2 / 3 * hyy;
-//            hzz = 2 / 3 * hzz;
             if (dim == 1)
             {
                 hxx = 2.e0 / 3. * hxx;
@@ -181,7 +178,7 @@ void int_force(int ntotal, float *mass,
             he = he*rhoij;
             dedt[i] = dedt[i] + mass[j] * he;
             dedt[j] = dedt[j] + mass[i] * he;
-            // For SPH algorithm 2
+            //For SPH algorithm 2 USED HERE
         }
         else if (pa_sph == 2)
         {
