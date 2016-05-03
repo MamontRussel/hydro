@@ -51,6 +51,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //timer->start(1000);
 }
 
+bool compare (const double &a, const double &b)
+{
+    return a<b;
+}
+
 void MainWindow::drawPlots()
 {
     if(dim==2)
@@ -115,7 +120,8 @@ void MainWindow::drawPlots()
             y_2.push_back(rY*1000);
         }
         qSort(x_2);
-        qSort(y_2);
+
+        //qSort(y_2.begin(),y_2.end(),qLess<double>());
         ui.plot2_2->addGraph();
         ui.plot2_2->graph(0)->setData(y_2,x_2);
         ui.plot2_2->yAxis->setRange(minX2*1000,maxX2*1000);
@@ -214,7 +220,7 @@ void MainWindow::paintEvent(QPaintEvent *)
             if(x[2][i]<minY)minY=x[2][i];
         }
 
-        double cx=(Lx)/(maxX-minX);
+        double cx=(Lx+350)/(maxX-minX);
         double cy=(Ly-40)/(maxY-minY);
 
         for(int i=1;i<=1600;i++)
@@ -222,7 +228,7 @@ void MainWindow::paintEvent(QPaintEvent *)
 
             double x_=x[1][i];
             double y_=x[2][i];
-            double uc=10+(x_-minX)*cx;
+            double uc=20+(x_-minX)*cx;
             double vc=Ly-20-(y_-minY)*cy;
 
             if(i%10==0)
@@ -249,7 +255,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         pixIzo.fill(Qt::white);
         QPainter painter2(&pixIzo);
 
-        cx=(Lx)/(maxX-minX);
+        cx=(Lx+350)/(maxX-minX);
         cy=(Ly-40)/(maxY-minY);
 
         double RabStrel[5][3],Strelka[5][3];

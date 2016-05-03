@@ -220,6 +220,21 @@
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>Vy</string>
+     </attribute>
+     <widget class="QCustomPlot" name="plot2_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>691</width>
+        <height>451</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
       <string>Points</string>
@@ -235,21 +250,6 @@
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_6">
-     <attribute name="title">
-      <string>Vy</string>
-     </attribute>
-     <widget class="QCustomPlot" name="plot2_2" native="true">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>691</width>
-        <height>451</height>
-       </rect>
       </property>
      </widget>
     </widget>
