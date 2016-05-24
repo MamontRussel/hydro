@@ -45,10 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.setupUi(this);
     ui.tabWidget_2->hide();
     bResult=false;
-
-    //QTimer *timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), this, SLOT(repaint()));
-    //timer->start(1000);
 }
 
 bool compare (const double &a, const double &b)
@@ -97,7 +93,6 @@ void MainWindow::drawPlots()
 //        ui.plot1_2->graph(0)->rescaleAxes(true);
 //        ui.plot1_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 
-
         double minX2=1000,minY2=1000,maxX2=-1000,maxY2=-1000;
         QVector<double> x_2,y_2;
         for(int i=1;i<=41;i++)
@@ -119,13 +114,13 @@ void MainWindow::drawPlots()
             x_2.push_back(rX*1000);
             y_2.push_back(rY*1000);
         }
-        qSort(x_2);
 
-        //qSort(y_2.begin(),y_2.end(),qLess<double>());
         ui.plot2_2->addGraph();
-        ui.plot2_2->graph(0)->setData(y_2,x_2);
-        ui.plot2_2->yAxis->setRange(minX2*1000,maxX2*1000);
-        ui.plot2_2->xAxis->setRange(minY2*1000,maxY2*1000);
+        ui.plot2_2->graph(0)->setData(x_2,y_2);
+        ui.plot2_2->xAxis->setRange(minX2*1000,maxX2*1000);
+        ui.plot2_2->yAxis->setRange(minY2*1000,maxY2*1000);
+        //ui.plot2_2->xAxis->setRangeReversed(true);
+        //ui.plot2_2->yAxis->setRangeReversed(true);
         ui.plot2_2->replot();
 //        ui.plot2_2->graph(0)->rescaleAxes(true);
 //        ui.plot2_2->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);

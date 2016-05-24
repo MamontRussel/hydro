@@ -38,7 +38,7 @@ void shock_tube(float **x, float **vx, float *mass, float *rho,
 // x-- coordinates of particles
 // vx-- velocities of particles
 // mass-- mass of particles
-// rho-- dnesities of particles
+// rho-- densities of particles
 // p-- pressure of particles
 // u-- internal energy of particles
 // itype-- types of particles

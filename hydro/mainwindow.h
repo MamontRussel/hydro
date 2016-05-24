@@ -3,7 +3,6 @@
 
 #include "ui_mainwindow.h"
 #include <iostream>
-#include <QTimer>
 #include "modul.h"
 #include "input.h"
 #include "output.h"
